@@ -13,30 +13,32 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "index",
-  data: () => ({
-    lists: [],
-  }),
-  methods: {
-    getLists: function () {
-      let config = useRuntimeConfig();
-      fetch(`${config.public.apiURL}/lists`, {
-        method: "GET",
-        headers: {"Content-type": "application/json"}
-      })
-          .then(response => response.json())
-          .then(json => this.lists = json)
-          .catch(err => console.log(err))
+<script lang="ts" setup>
+import type { MovieList } from "~/types/movielist";
+
+const lists = defineModel<MovieList[]>("movie_list", { default: [] });
+const updateLists = async function () {
+  let config = useRuntimeConfig();
+  const { data, status, error } = await useFetch<MovieList[]>(
+    `${config.public.apiURL}/lists`,
+    {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
     },
-  },
-  mounted() {
-    this.getLists()
+  );
+
+  if (error) {
+    if (error.value?.statusCode === 401) {
+      console.log("unauthorized");
+    }
+  } else {
+    lists.value = data.value || [];
   }
-}
+};
+
+onMounted(() => {
+  updateLists();
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
