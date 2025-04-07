@@ -9,7 +9,7 @@
           <NuxtLink :to="`/lists/${list.id}`" class="underline">
             <h2 class="text-lg">{{ list.name }}</h2>
           </NuxtLink>
-          <span>Movies: {{ list.movie_count }}</span>
+          <span>Movies: {{ list.movie_count || 0 }}</span>
         </div>
       </li>
     </ul>
@@ -33,8 +33,8 @@ const updateLists = async function () {
     },
   );
 
-  if (error) {
-    if (error.value?.statusCode === 401) {
+  if (error.value) {
+    if (error.value.statusCode === 401) {
       navigateTo("/");
     }
   } else {
