@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/movielist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/movielist.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +47,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2K1xoABBc3o8XBi4orGtOrB9Dxn" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -63,7 +66,7 @@
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/tiradoe/Projects/movie-night/web",
+    "last_opened_file_path": "/home/tiradoe/Projects/movie-night/web/src/types",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -72,15 +75,17 @@
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "settings.editor.selected.configurable": "settings.vue",
     "ts.external.directory.path": "/home/tiradoe/Projects/movie-night/web/src/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/types" />
       <recent name="$PROJECT_DIR$/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -127,7 +132,8 @@
       <workItem from="1673397538637" duration="47416000" />
       <workItem from="1673508732689" duration="1316000" />
       <workItem from="1673547794038" duration="2346000" />
-      <workItem from="1743904898331" duration="11972000" />
+      <workItem from="1743904898331" duration="20256000" />
+      <workItem from="1743998844137" duration="23268000" />
     </task>
     <servers />
   </component>
