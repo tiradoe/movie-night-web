@@ -1,17 +1,28 @@
 <template>
   <div class="p-5 sm:p-0">
+    <div v-if="schedule && schedule?.showings.length < 1" class="p-5">
+      <span>No Showings Found</span>
+    </div>
     <ul class="flex flex-col gap-5">
-      <li v-for="showing in showings" class="p-5 movie-card neon-border">
+      <li
+        v-for="showing in schedule?.showings"
+        class="p-5 movie-card neon-border"
+      >
         <div class="sm:grid grid-cols-2 lg:grid-cols-3">
-          <img :src="showing.poster"
-               alt="Movie Poster"
-               class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
+          <img
+            :src="showing.movie.poster"
+            alt="Movie Poster"
+            class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
           />
 
           <div class="self-center text-left">
-            <h5 class="text-center sm:text-left mb-3 text-xl">{{ showing.title }}</h5>
-            <h5 class="text-center sm:text-left mb-3">{{ formatDate(showing.showtime) }}</h5>
-            <span class="">{{ showing.plot }}</span>
+            <h5 class="text-center sm:text-left mb-3 text-xl">
+              {{ showing.movie.title }}
+            </h5>
+            <h5 class="text-center sm:text-left mb-3">
+              {{ formatDate(showing.showtime) }}
+            </h5>
+            <span class="">{{ showing.movie.plot }}</span>
           </div>
         </div>
       </li>
@@ -19,22 +30,26 @@
 
     <!-- PREVIOUS SHOWINGS -->
     <div id="previous-showings" class="mt-5 list-group">
-      <span class="block mb-5 hover-pointer underline" @click="getShowings(true)">
+      <span
+        class="block mb-5 hover-pointer underline"
+        @click="getSchedule(true)"
+      >
         Previous Showings
       </span>
       <span id="loader" class="hidden">Loading...</span>
       <ul class="flex flex-col gap-5">
-        <li v-for="showing in previous_showings" class="p-5 movie-card neon-border">
+        <li v-for="showing in past_showings" class="p-5 movie-card neon-border">
           <div class="sm:grid grid-cols-2 lg:grid-cols-3">
-            <img :src="showing.poster"
-                 alt="Movie Poster"
-                 class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
+            <img
+              :src="showing.movie.poster"
+              alt="Movie Poster"
+              class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
             />
 
             <div class="self-center text-left">
-              <h5 class="text-xl mb-3">{{ showing.title }}</h5>
+              <h5 class="text-xl mb-3">{{ showing.movie.title }}</h5>
               <h5 class="mb-3">{{ formatDate(showing.showtime) }}</h5>
-              <span class="">{{ showing.plot }}</span>
+              <span class="">{{ showing.movie.plot }}</span>
             </div>
           </div>
         </li>
@@ -43,59 +58,88 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "index",
-  data: () => ({
-    showings: [],
-    previous_showings: [],
-    got_previous: false,
-    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  }),
-  methods: {
-    formatDate: function (date_string) {
-      console.log(date_string)
-      let parsed_date = new Date(Date.parse(date_string));
-      let month = this.months[parsed_date.getMonth()];
+<script lang="ts" setup>
+import type { Showing } from "~/types/showing";
+import type { Schedule } from "~/types/schedule";
 
-      return `${month} ${parsed_date.getDate()}, ${parsed_date.getFullYear()}`
-    },
-    getShowings: function (previous = false) {
-      let config = useRuntimeConfig()
-      if (this.got_previous) {
-        return false;
-      }
+const schedule = defineModel<Schedule>("schedule");
+const past_showings = defineModel<Showing[]>("past_showings", {
+  default: [],
+});
+const got_previous = ref(false);
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-      document.getElementById("loader").classList.toggle("hidden")
+const formatDate = function (date_string: string) {
+  let parsed_date = new Date(Date.parse(date_string));
+  let month = months[parsed_date.getMonth()];
 
-      let params = "";
-      if (previous) params = "?previous=true";
+  return `${month} ${parsed_date.getDate()}, ${parsed_date.getFullYear()}`;
+};
 
-      return fetch(`${config.public.apiURL}/schedules/1${params}`, {
-        method: "GET",
-        headers: {"Content-type": "application/json"}
-      })
-          .then(response => response.json())
-          .then(showings => {
-
-            if (previous) {
-              this.got_previous = true;
-              this.previous_showings = showings;
-            } else {
-              this.showings = showings
-            }
-            document.getElementById("loader").classList.toggle("hidden")
-          })
-          .catch(err => console.log(err));
-
-    }
-  },
-  mounted() {
-    this.getShowings()
+const getSchedule = async function (previous = false) {
+  let config = useRuntimeConfig();
+  if (got_previous.value) {
+    return false;
   }
-}
+
+  document.getElementById("loader")?.classList.toggle("hidden");
+
+  let params = "";
+  if (previous) params = "?past_showings=true";
+
+  const { data, error } = await useFetch<Schedule>(
+    `${config.public.apiURL}/schedules/1${params}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+        Authorization: `Token ${useCookie("token").value}`,
+      },
+    },
+  );
+
+  if (error.value) {
+    if (error.value.statusCode === 401) {
+      navigateTo("/");
+    }
+    if (error.value.statusCode === 404) {
+      alert("Schedule not found");
+      navigateTo("/");
+    }
+  } else {
+    if (!data.value) {
+      alert("Schedule not found");
+      navigateTo("/");
+    } else {
+      if (previous) {
+        past_showings.value = data.value.past_showings;
+      } else {
+        schedule.value = data.value;
+      }
+      document.getElementById("loader")?.classList.toggle("hidden");
+    }
+  }
+
+  return schedule;
+};
+
+onMounted(() => {
+  getSchedule();
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
