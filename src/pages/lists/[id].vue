@@ -10,33 +10,47 @@
           <li>
             <label class="mr-2" for="hide_scheduled">Hide Scheduled</label>
             <input
-                @change="hideScheduled"
-                v-model="hide_scheduled" id="hide_scheduled" type="checkbox"/>
+              id="hide_scheduled"
+              v-model="hide_scheduled"
+              type="checkbox"
+              @change="hideScheduled"
+            />
           </li>
         </ul>
       </div>
-      <input v-model="movie_query"
-             class="p-1 rounded"
-             placeholder="Filter Movies"
-             type="text"
-             @input="filterMovies"
+      <input
+        v-model="movie_query"
+        class="p-1 rounded"
+        placeholder="Filter Movies"
+        type="text"
+        @input="filterMovies"
       />
     </div>
 
     <!-- MOVIE LIST -->
-    <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5">
-      <li v-for="movie in filtered_movies" :key="movie.id" class="rounded movie-card neon-border">
+    <ul
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5"
+    >
+      <li
+        v-for="movie in filtered_movies"
+        :key="movie.id"
+        class="rounded movie-card neon-border"
+      >
         <!-- POSTER -->
         <img
-            :data-src="movie.poster"
-            alt="movie poster"
-            class="lazyload p-3 movie-poster hover-pointer mx-auto"
-            @click="showModal(movie)"
+          :data-src="movie.poster"
+          alt="movie poster"
+          class="lazyload p-3 movie-poster hover-pointer mx-auto"
+          @click="showModal(movie)"
         />
         <div class="p-5 flex flex-col">
           <!-- TITLE -->
           <span class="font-bold text-center mb-1">{{ movie.title }}</span>
-          <span v-if="logged_in" class="text-center hover-pointer" @click="removeMovie(movie.id)">
+          <span
+            v-if="logged_in"
+            class="text-center hover-pointer"
+            @click="removeMovie(movie.id)"
+          >
             X
           </span>
         </div>
@@ -45,100 +59,139 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import ShowMovie from "~/components/modal-content/ShowMovie.vue";
-import 'lazysizes';
+import "lazysizes";
+import type { MovieList } from "~/types/movielist";
+import type { Movie } from "~/types/movie";
 
-export default {
-  name: "list",
-  components: {ShowMovie},
-  data: () => ({
-    list_id: 0,
-    list: [],
-    modal_movie: null,
-    movies: [],
-    filtered_movies: [],
-    movie_query: "",
-    logged_in: false,
-    hide_scheduled: false,
-  }),
-  methods: {
-    getList: function (list_id) {
-      let config = useRuntimeConfig()
-      fetch(`${config.public.apiURL}/lists/${list_id}`, {
-        method: "GET",
-        headers: {"Content-type": "application/json"}
-      })
-          .then(response => response.json())
-          .then(json => {
-            this.list = json.list;
-            this.movies = json.movies;
-            this.filtered_movies = this.movies;
-          })
-          .catch(err => console.log(err))
-    },
-    hideScheduled: function() {
-      if(this.hide_scheduled) {
-        this.filtered_movies = this.movies.filter(movie => {
-          return movie.last_watched === null
-        });
-      } else {
-        this.filtered_movies = this.movies;
-      }
-    },
-    removeMovie: function (movie_id) {
-      let config = useRuntimeConfig()
-      let confirmed = confirm("Remove movie from list?");
+const list_id = ref(0);
+const list = defineModel<MovieList>("movie_list", { default: [] });
+const modal_movie: Ref<Movie | null> = ref(null);
+const movies = defineModel<Movie[] | []>("movies", {
+  default: [],
+});
+const filtered_movies = defineModel<Movie[]>("filtered_movies");
+const movie_query = ref("");
+const logged_in = ref(false);
+const hide_scheduled = ref(false);
 
-      if (!confirmed) {
-        return false;
-      }
-
-      return fetch(`${config.public.apiURL}/movies/l/${this.list_id}/m/${movie_id}`, {
-        credentials: "include",
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-          "token": useCookie("token").value,
-        }
-      })
-          .then(response => response.json())
-          .then(_json => {
-            this.filtered_movies = this.filtered_movies.filter((movie) => {
-              return movie.id !== movie_id
-            })
-          })
-          .catch(err => console.log(err));
+const getList = async function (list_id: number) {
+  let config = useRuntimeConfig();
+  const { data, error } = await useFetch<MovieList>(
+    `${config.public.apiURL}/lists/${list_id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Token ${useCookie("token").value}`,
+      },
     },
-    filterMovies: function () {
-      if (!this.movie_query) {
-        this.filtered_movies = this.movies;
-        return;
-      }
+  );
 
-      this.filtered_movies = this.movies.filter(movie => {
-        return movie.title.toLowerCase()
-            .search(this.movie_query.toLowerCase()) > -1
-      });
-    },
-    showModal: function (movie) {
-      this.modal_movie = movie;
-      document.getElementById("movie-modal").classList.remove("hidden");
-    },
-  },
-  mounted() {
-    const route = useRoute();
-    this.list_id = route.params.id
-    this.getList(this.list_id)
-
-    const token = useCookie("token").value;
-    if (token) {
-      this.logged_in = true;
+  if (error.value) {
+    if (error.value.statusCode === 401) {
+      navigateTo("/");
+    }
+    if (error.value.statusCode === 404) {
+      alert("List not found");
+      navigateTo("/lists");
+    }
+  } else {
+    if (!data.value) {
+      alert("List not found");
+      navigateTo("/lists");
+    } else {
+      list.value = data.value;
+      movies.value = data.value?.movies || [];
+      filtered_movies.value = movies.value;
     }
   }
-}
+};
+
+const hideScheduled = function () {
+  if (hide_scheduled && movies.value.length > 0) {
+    let filtered = movies.value.filter((movie) => {
+      return movie.last_watched === null;
+    });
+    if (typeof filtered != "undefined") {
+      filtered_movies.value = filtered;
+    }
+  } else {
+    filtered_movies.value = movies.value;
+  }
+};
+
+const removeMovie = async function (movie_id: number) {
+  let config = useRuntimeConfig();
+  let confirmed = confirm("Remove movie from list?");
+
+  if (!confirmed) {
+    return false;
+  }
+
+  const { data, error } = await useFetch<MovieList>(
+    `${config.public.apiURL}/lists/${list_id.value}/movie/${movie_id}/`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Token ${useCookie("token").value}`,
+      },
+    },
+  );
+
+  if (error.value) {
+    if (error.value.statusCode === 401) {
+      navigateTo("/");
+    }
+    if (error.value.statusCode === 404) {
+      alert("List not found");
+      navigateTo("/lists");
+    }
+  } else {
+    if (!data.value) {
+      alert("List not found");
+      navigateTo("/lists");
+    } else {
+      list.value = data.value;
+      movies.value = data.value?.movies || [];
+      filtered_movies.value = movies.value;
+    }
+  }
+};
+
+const filterMovies = function () {
+  if (!movie_query) {
+    filtered_movies.value = movies.value;
+    return;
+  }
+
+  filtered_movies.value = movies.value.filter((movie) => {
+    return (
+      movie.title.toLowerCase().search(movie_query.value.toLowerCase()) > -1
+    );
+  });
+};
+
+const showModal = function (movie: Movie) {
+  modal_movie.value = movie;
+  document.getElementById("movie-modal")?.classList.remove("hidden");
+};
+
+onMounted(() => {
+  const route = useRoute();
+  if (typeof route.params.id === "string") {
+    const list_param: string = route.params.id;
+    list_id.value = parseInt(list_param);
+    getList(list_id.value);
+  }
+
+  const token = useCookie("token").value;
+  if (token) {
+    logged_in.value = true;
+  }
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
