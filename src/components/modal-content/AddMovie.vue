@@ -1,75 +1,87 @@
 <template>
-  <div v-if="movie != null" class="sm:m-5 p-10 movie-card neon-border">
+  <div v-if="props.movie != null" class="sm:m-5 p-10 movie-card neon-border">
     <div>
       <h2 id="modal-title" class="row pb-3">
-        {{ movie.Title }} ({{ movie.Year }})
+        {{ movie.title }} ({{ movie.year }})
       </h2>
 
       <div class="grid sm:grid-cols-2">
         <!-- MODAL POSTER -->
         <div class="text-end">
-          <img id="modal-poster" :src="movie.Poster" alt="poster" class="pt-5"/>
+          <img
+            id="modal-poster"
+            :src="movie.poster"
+            alt="poster"
+            class="pt-5"
+          />
         </div>
 
         <div class="pt-5">
-          <label class="" for="list-picker">Add To List</label><br/>
+          <label class="" for="list-picker">Add To List</label><br />
           <select id="list-picker" v-model="list_id" class="p-1 text-black">
-            <option v-for="list in lists" :value="list.id">{{ list.name }}</option>
+            <option v-for="list in lists" :value="list.id">
+              {{ list.name }}
+            </option>
           </select>
-          <button class="modal-poster btn p-1" type="button" @click="addMovie(movie.imdbID)">
+          <button
+            class="modal-poster btn p-1"
+            type="button"
+            @click="addMovie(movie.imdb_id)"
+          >
             Submit
           </button>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
-<script>
-export default {
-  name: "AddMovie",
-  data: () => ({
-    list_id: 0,
-    lists: {}
-  }),
-  methods: {
-    addMovie: function (imdb_id) {
-      let config = useRuntimeConfig()
-      let list = parseInt(this.list_id)
+<script lang="ts" setup>
+import type { MovieList } from "~/types/movielist";
 
-      return fetch(`${config.public.apiURL}/lists/movie`, {
-        method: "POST",
-        body: JSON.stringify({imdb_id: imdb_id, list_id: list}),
-        headers: {
-          "Content-type": "application/json",
-          "token": useCookie("token").value,
-        }
-      })
-          .then(response => response.json())
-          .then(_json => {
-            this.$parent.closeModal()
-          })
-          .catch(err => console.log(err))
+const props = defineProps(["movie"]);
+const list_id = ref(0);
+const lists = defineModel<MovieList[]>("lists", { default: [] });
+const emit = defineEmits<{
+  (e: "close-modal"): void;
+}>();
+
+const addMovie = function (imdb_id: string) {
+  if (typeof imdb_id === "undefined") {
+    console.log("No imdb id");
+  }
+  let config = useRuntimeConfig();
+
+  return fetch(
+    `${config.public.apiURL}/lists/${list_id.value}/movie/${imdb_id}/`,
+    {
+      method: "PUT",
+      body: `{ imdb_id: ${imdb_id}, list_id: ${list_id}}`,
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Token ${useCookie("token").value}`,
+      },
     },
-    getLists: function () {
-      let config = useRuntimeConfig()
-      fetch(`${config.public.apiURL}/lists`, {
-        method: "GET",
-        headers: {"Content-type": "application/json",}
-      })
-          .then(response => response.json())
-          .then(json => this.lists = json)
-          .catch(err => console.log(err))
-    },
-  },
-  mounted() {
-    this.getLists();
-  },
-  props: ['movie']
-}
+  )
+    .then((response) => response.json())
+    .then((_json) => {
+      emit("close-modal");
+    })
+    .catch((err) => console.log(err));
+};
+const getLists = function () {
+  let config = useRuntimeConfig();
+  fetch(`${config.public.apiURL}/lists`, {
+    method: "GET",
+    headers: { "Content-type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((json) => (lists.value = json))
+    .catch((err) => console.log(err));
+};
+onMounted(() => {
+  getLists();
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

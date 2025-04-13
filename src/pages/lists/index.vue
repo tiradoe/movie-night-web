@@ -18,18 +18,24 @@
 
 <script lang="ts" setup>
 import type { MovieList } from "~/types/movielist";
+import { useCookie } from "#app";
 
 const lists = defineModel<MovieList[]>("movie_list", { default: [] });
 const updateLists = async function () {
   let config = useRuntimeConfig();
+  let headers: any = {
+    "Content-type": "application/json",
+  };
+
+  if (typeof useCookie("token").value !== "undefined") {
+    headers["Authorization"] = `Token ${useCookie("token").value}`;
+  }
+
   const { data, error } = await useFetch<MovieList[]>(
     `${config.public.apiURL}/lists`,
     {
       method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Token ${useCookie("token").value}`,
-      },
+      headers: headers,
     },
   );
 

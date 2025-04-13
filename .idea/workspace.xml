@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/schedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/schedule/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/search.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/admin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,31 +60,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "schedule-page-updates",
-    "last_opened_file_path": "/home/tiradoe/Projects/movie-night/web/src/types",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier",
-    "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.vue",
-    "ts.external.directory.path": "/home/tiradoe/Projects/movie-night/web/src/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;movie-search&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/tiradoe/Projects/movie-night/web/src/types&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.vue&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/tiradoe/Projects/movie-night/web/src/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/types" />
@@ -131,6 +136,7 @@
       <workItem from="1673547794038" duration="2346000" />
       <workItem from="1743904898331" duration="20256000" />
       <workItem from="1743998844137" duration="23268000" />
+      <workItem from="1744430699183" duration="32152000" />
     </task>
     <servers />
   </component>

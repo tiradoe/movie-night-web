@@ -1,6 +1,6 @@
 <template>
   <div v-if="list_id !== 0" class="p-5 sm:p-0">
-    <Modal>
+    <Modal ref="movie_modal">
       <ShowMovie v-if="modal_movie" :movie="modal_movie"></ShowMovie>
     </Modal>
     <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
@@ -64,6 +64,9 @@ import ShowMovie from "~/components/modal-content/ShowMovie.vue";
 import "lazysizes";
 import type { MovieList } from "~/types/movielist";
 import type { Movie } from "~/types/movie";
+import Modal from "~/components/Modal.vue";
+
+const movie_modal = ref<InstanceType<typeof Modal> | null>(null);
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
@@ -176,7 +179,7 @@ const filterMovies = function () {
 
 const showModal = function (movie: Movie) {
   modal_movie.value = movie;
-  document.getElementById("movie-modal")?.classList.remove("hidden");
+  movie_modal.value?.toggleModal();
 };
 
 onMounted(() => {
