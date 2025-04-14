@@ -83,10 +83,10 @@ const months = [
 ];
 
 const formatDate = function (date_string: string) {
-  let parsed_date = new Date(Date.parse(date_string));
-  let month = months[parsed_date.getMonth()];
+  let date = new Date(date_string);
+  let month = months[date.getMonth()];
 
-  return `${month} ${parsed_date.getDate()}, ${parsed_date.getFullYear()}`;
+  return `${month} ${date.getDate()}, ${date.getFullYear()}`;
 };
 
 const getSchedule = async function (previous = false) {
