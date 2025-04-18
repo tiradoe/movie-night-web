@@ -32,6 +32,7 @@ const movies = defineModel<Movie[]>("movie_list", { default: [] });
 const showModal = (movie: Movie) => {
   emit("show-modal", movie);
 };
+
 const findMovies = async function (e: Event) {
   let config = useRuntimeConfig();
   e.preventDefault();

@@ -1,7 +1,11 @@
 <template>
   <div v-if="list_id !== 0" class="p-5 sm:p-0">
     <Modal ref="movie_modal">
-      <ShowMovie v-if="modal_movie" :movie="modal_movie"></ShowMovie>
+      <ShowMovie
+        v-if="modal_movie"
+        :movie="modal_movie"
+        @close-modal="closeModal"
+      ></ShowMovie>
     </Modal>
     <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
     <div class="grid grid-cols-2 rounded movie-card neon-border p-5">
@@ -65,8 +69,6 @@ import "lazysizes";
 import type { MovieList } from "~/types/movielist";
 import type { Movie } from "~/types/movie";
 import Modal from "~/components/Modal.vue";
-
-const movie_modal = ref<InstanceType<typeof Modal> | null>(null);
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
@@ -179,6 +181,11 @@ const filterMovies = function () {
 
 const showModal = function (movie: Movie) {
   modal_movie.value = movie;
+  movie_modal.value?.toggleModal();
+};
+
+const movie_modal = ref<InstanceType<typeof Modal> | null>(null);
+const closeModal = function (movie: Movie) {
   movie_modal.value?.toggleModal();
 };
 

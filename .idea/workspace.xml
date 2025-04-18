@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/admin/search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/search.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/admin/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/showings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/showings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/showing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/showing.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +64,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;movie-search&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;showings-updates&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/tiradoe/Projects/movie-night/web/src/types&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
