@@ -61,6 +61,8 @@
 <script lang="ts" setup>
 import type { Showing } from "~/types/showing";
 import type { Schedule } from "~/types/schedule";
+import { $fetch } from "ofetch";
+import { useCookie } from "#app";
 
 const schedule = defineModel<Schedule>("schedule");
 const past_showings = defineModel<Showing[]>("past_showings", {
@@ -100,39 +102,33 @@ const getSchedule = async function (previous = false) {
   let params = "";
   if (previous) params = "?past_showings=true";
 
-  const { data, error } = await useFetch<Schedule>(
-    `${config.public.apiURL}/schedules/1${params}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-        Authorization: `Token ${useCookie("token").value}`,
-      },
+  await $fetch(`${config.public.apiURL}/schedules/1${params}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
     },
-  );
-
-  if (error.value) {
-    if (error.value.statusCode === 401) {
-      navigateTo("/");
-    }
-    if (error.value.statusCode === 404) {
-      alert("Schedule not found");
-      navigateTo("/");
-    }
-  } else {
-    if (!data.value) {
-      alert("Schedule not found");
-      navigateTo("/");
-    } else {
+  })
+    .then((data) => {
       if (previous) {
-        past_showings.value = data.value.past_showings;
+        past_showings.value = data.past_showings;
       } else {
-        schedule.value = data.value;
+        schedule.value = data;
       }
       document.getElementById("loader")?.classList.toggle("hidden");
-    }
-  }
+    })
+    .catch((err) => {
+      switch (err.statusCode) {
+        case 401:
+          useCookie("token").value = null;
+          navigateTo("/");
+          break;
+        case 404:
+          alert("Unable to find schedule");
+          break;
+      }
+    });
 
   return schedule;
 };
