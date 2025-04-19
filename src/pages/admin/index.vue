@@ -44,7 +44,7 @@
     </div>
 
     <div id="lists" class="hidden">
-      <lists></lists>
+      <lists />
     </div>
   </div>
 </template>
@@ -54,15 +54,14 @@ import AddMovie from "~/components/modal-content/AddMovie.vue";
 import Search from "~/components/admin/search.vue";
 import Showings from "~/components/admin/showings.vue";
 import Lists from "~/components/admin/lists.vue";
-import type { MovieList } from "~/types/movielist";
 import { useCookie } from "#app";
 import type { Movie } from "~/types/movie";
 import Modal from "~/components/Modal.vue";
 
-const lists = defineModel<MovieList>("movie-lists", { default: [] });
 const modal_movie = defineModel<Movie>("#movie-modal");
 
 const movie_modal = ref<InstanceType<typeof Modal> | null>(null);
+const current_view = ref("search");
 
 const closeModal = function () {
   movie_modal?.value?.toggleModal();
@@ -72,6 +71,7 @@ const showModal = function (movie: Movie) {
   movie_modal?.value?.toggleModal();
 };
 const toggleDisplay = function (element_id: string) {
+  if (element_id === current_view.value) return;
   let tabs = ["search", "showings", "lists"];
 
   tabs.forEach((value) => {
@@ -80,6 +80,7 @@ const toggleDisplay = function (element_id: string) {
       document
         .getElementById(element_id + "-tab")
         ?.classList.toggle("underline");
+      current_view.value = element_id;
     } else if (!document.getElementById(value)?.classList.contains("hidden")) {
       document.getElementById(value)?.classList.toggle("hidden");
       document.getElementById(value + "-tab")?.classList.toggle("underline");

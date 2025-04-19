@@ -53,7 +53,7 @@
           <span
             v-if="logged_in"
             class="text-center hover-pointer"
-            @click="removeMovie(movie.id)"
+            @click="removeMovie(movie.imdb_id)"
           >
             X
           </span>
@@ -83,35 +83,27 @@ const hide_scheduled = ref(false);
 
 const getList = async function (list_id: number) {
   let config = useRuntimeConfig();
-  const { data, error } = await useFetch<MovieList>(
-    `${config.public.apiURL}/lists/${list_id}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Token ${useCookie("token").value}`,
-      },
+  $fetch<MovieList>(`${config.public.apiURL}/lists/${list_id}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
     },
-  );
-
-  if (error.value) {
-    if (error.value.statusCode === 401) {
-      navigateTo("/");
-    }
-    if (error.value.statusCode === 404) {
-      alert("List not found");
-      navigateTo("/lists");
-    }
-  } else {
-    if (!data.value) {
-      alert("List not found");
-      navigateTo("/lists");
-    } else {
-      list.value = data.value;
-      movies.value = data.value?.movies || [];
+  })
+    .then((data) => {
+      list.value = data;
+      movies.value = data?.movies || [];
       filtered_movies.value = movies.value;
-    }
-  }
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        navigateTo("/");
+      }
+      if (err.statusCode === 404) {
+        alert("List not found");
+        navigateTo("/lists");
+      }
+    });
 };
 
 const hideScheduled = function () {
@@ -127,7 +119,7 @@ const hideScheduled = function () {
   }
 };
 
-const removeMovie = async function (movie_id: number) {
+const removeMovie = async function (movie_id: string) {
   let config = useRuntimeConfig();
   let confirmed = confirm("Remove movie from list?");
 

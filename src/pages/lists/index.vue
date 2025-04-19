@@ -31,21 +31,19 @@ const updateLists = async function () {
     headers["Authorization"] = `Token ${useCookie("token").value}`;
   }
 
-  const { data, error } = await useFetch<MovieList[]>(
-    `${config.public.apiURL}/lists`,
-    {
-      method: "GET",
-      headers: headers,
-    },
-  );
-
-  if (error.value) {
-    if (error.value.statusCode === 401) {
-      navigateTo("/");
-    }
-  } else {
-    lists.value = data.value || [];
-  }
+  await $fetch<MovieList[]>(`${config.public.apiURL}/lists`, {
+    method: "GET",
+    headers: headers,
+  })
+    .then((data) => {
+      lists.value = data || [];
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        useCookie("token").value = null;
+        navigateTo("/");
+      }
+    });
 };
 
 onMounted(() => {
