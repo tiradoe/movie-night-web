@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/lists.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/lists.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/showings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/showings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/admin/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/schedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/schedule/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +63,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "usefetch-to-fetch",
+    "git-widget-placeholder": "unauthenticated-requests",
     "last_opened_file_path": "/home/tiradoe/Projects/movie-night/web/src/types",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -112,8 +108,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.26053.13" />
-        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.26053.13" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PS-251.23774.436" />
+        <option value="bundled-php-predefined-a98d8de5180a-aaeaa8632555-com.jetbrains.php.sharedIndexes-PS-251.23774.436" />
       </set>
     </attachedChunks>
   </component>
@@ -137,6 +133,7 @@
       <workItem from="1743904898331" duration="20256000" />
       <workItem from="1743998844137" duration="23268000" />
       <workItem from="1744430699183" duration="32152000" />
+      <workItem from="1745179755243" duration="37963000" />
     </task>
     <servers />
   </component>
