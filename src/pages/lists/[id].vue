@@ -69,6 +69,7 @@ import "lazysizes";
 import type { MovieList } from "~/types/movielist";
 import type { Movie } from "~/types/movie";
 import Modal from "~/components/Modal.vue";
+import { useCookie } from "#app";
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
@@ -83,12 +84,17 @@ const hide_scheduled = ref(false);
 
 const getList = async function (list_id: number) {
   let config = useRuntimeConfig();
+  let headers: any = {
+    "Content-type": "application/json",
+  };
+
+  if (typeof useCookie("token").value !== "undefined") {
+    headers["Authorization"] = `Token ${useCookie("token").value}`;
+  }
+
   $fetch<MovieList>(`${config.public.apiURL}/lists/${list_id}`, {
     method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Token ${useCookie("token").value}`,
-    },
+    headers: headers,
   })
     .then((data) => {
       list.value = data;
