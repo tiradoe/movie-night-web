@@ -102,13 +102,17 @@ const getSchedule = async function (previous = false) {
   let params = "";
   if (previous) params = "?past_showings=true";
 
+  let headers: any = {
+    "Content-type": "application/json",
+  };
+
+  if (typeof useCookie("token").value !== "undefined") {
+    headers["Authorization"] = `Token ${useCookie("token").value}`;
+  }
+
   await $fetch(`${config.public.apiURL}/schedules/1${params}`, {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-type": "application/json",
-      Authorization: `Token ${useCookie("token").value}`,
-    },
+    headers: headers,
   })
     .then((data) => {
       if (previous) {
