@@ -1,47 +1,18 @@
 <template>
   <div class="p-5 sm:p-0">
-    <div
-      v-if="schedule && schedule?.showings.length < 1 && !loading"
-      class="p-5"
-    >
-      <span>No Showings Found</span>
-    </div>
     <LoadingIcon v-if="loading" />
-    <ul class="flex flex-col gap-5">
-      <li
-        v-for="showing in schedule?.showings"
-        class="p-5 movie-card neon-border"
+    <div v-else>
+      <div
+        v-if="schedule && schedule?.showings.length < 1 && !loading"
+        class="p-5"
       >
-        <div class="sm:grid grid-cols-2 lg:grid-cols-3">
-          <img
-            :src="showing.movie.poster"
-            alt="Movie Poster"
-            class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
-          />
-
-          <div class="self-center text-left">
-            <h5 class="text-center sm:text-left mb-3 text-xl">
-              {{ showing.movie.title }}
-            </h5>
-            <h5 class="text-center sm:text-left mb-3">
-              {{ formatDate(showing.showtime) }}
-            </h5>
-            <span class="">{{ showing.movie.plot }}</span>
-          </div>
-        </div>
-      </li>
-    </ul>
-
-    <!-- PREVIOUS SHOWINGS -->
-    <div id="previous-showings" class="mt-5 list-group">
-      <span
-        class="block mb-5 hover-pointer underline"
-        @click="getSchedule(true)"
-      >
-        Previous Showings
-      </span>
+        <span>No Showings Found</span>
+      </div>
       <ul class="flex flex-col gap-5">
-        <li v-for="showing in past_showings" class="p-5 movie-card neon-border">
+        <li
+          v-for="showing in schedule?.showings"
+          class="p-5 movie-card neon-border"
+        >
           <div class="sm:grid grid-cols-2 lg:grid-cols-3">
             <img
               :src="showing.movie.poster"
@@ -50,13 +21,48 @@
             />
 
             <div class="self-center text-left">
-              <h5 class="text-xl mb-3">{{ showing.movie.title }}</h5>
-              <h5 class="mb-3">{{ formatDate(showing.showtime) }}</h5>
+              <h5 class="text-center sm:text-left mb-3 text-xl">
+                {{ showing.movie.title }}
+              </h5>
+              <h5 class="text-center sm:text-left mb-3">
+                {{ formatDate(showing.showtime) }}
+              </h5>
               <span class="">{{ showing.movie.plot }}</span>
             </div>
           </div>
         </li>
       </ul>
+
+      <!-- PREVIOUS SHOWINGS -->
+      <LoadingIcon v-if="loadingPrevious" />
+      <div v-else id="previous-showings" class="mt-5 list-group">
+        <span
+          class="block mb-5 hover-pointer underline"
+          @click="getSchedule(true)"
+        >
+          Previous Showings
+        </span>
+        <ul class="flex flex-col gap-5">
+          <li
+            v-for="showing in past_showings"
+            class="p-5 movie-card neon-border"
+          >
+            <div class="sm:grid grid-cols-2 lg:grid-cols-3">
+              <img
+                :src="showing.movie.poster"
+                alt="Movie Poster"
+                class="mx-auto mb-5 sm:mb-0 sm:mx-0 neon-border bg-black schedule-poster"
+              />
+
+              <div class="self-center text-left">
+                <h5 class="text-xl mb-3">{{ showing.movie.title }}</h5>
+                <h5 class="mb-3">{{ formatDate(showing.showtime) }}</h5>
+                <span class="">{{ showing.movie.plot }}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +78,7 @@ const past_showings = defineModel<Showing[]>("past_showings", {
   default: [],
 });
 const loading = ref(true);
+const loadingPrevious = ref(false);
 const got_previous = ref(false);
 const months = [
   "January",
@@ -96,7 +103,9 @@ const formatDate = function (date_string: string) {
 };
 
 const getSchedule = async function (previous = false) {
-  loading.value = true;
+  if (previous) loadingPrevious.value = true;
+  else loading.value = true;
+
   let config = useRuntimeConfig();
   if (got_previous.value) {
     return false;
@@ -124,6 +133,7 @@ const getSchedule = async function (previous = false) {
         schedule.value = data;
       }
       loading.value = false;
+      loadingPrevious.value = false;
     })
     .catch((err) => {
       switch (err.statusCode) {
@@ -133,6 +143,7 @@ const getSchedule = async function (previous = false) {
           break;
         case 404:
           alert("Unable to find schedule");
+          navigateTo("/");
           break;
       }
     });
