@@ -1,8 +1,10 @@
 <template>
   <div class="p-5 sm:p-0">
-    <div v-if="lists.length < 1">
+    <div v-if="lists.length < 1 && !loading">
       <p>No lists found</p>
     </div>
+    <LoadingIcon v-if="loading" />
+
     <ul class="grid grid-cols-2 gap-3 mt-5">
       <li v-for="list in lists" class="movie-card neon-border p-5 rounded">
         <div class="grid grid-rows-2 gap-3">
@@ -21,7 +23,10 @@ import type { MovieList } from "~/types/movielist";
 import { useCookie } from "#app";
 
 const lists = defineModel<MovieList[]>("movie_list", { default: [] });
+const loading = ref(true);
+
 const updateLists = async function () {
+  loading.value = true;
   let config = useRuntimeConfig();
   let headers: any = {
     "Content-type": "application/json",
@@ -37,6 +42,7 @@ const updateLists = async function () {
   })
     .then((data) => {
       lists.value = data || [];
+      loading.value = false;
     })
     .catch((err) => {
       if (err.statusCode === 401) {
