@@ -1,6 +1,6 @@
 <template>
   <LoadingIcon v-if="loading" />
-  <div v-if="list_id !== 0" class="p-5 sm:p-0">
+  <div v-else class="p-5 sm:p-0">
     <Modal ref="movie_modal">
       <ShowMovie
         v-if="modal_movie"
