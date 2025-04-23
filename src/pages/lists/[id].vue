@@ -1,4 +1,5 @@
 <template>
+  <LoadingIcon v-if="loading" />
   <div v-if="list_id !== 0" class="p-5 sm:p-0">
     <Modal ref="movie_modal">
       <ShowMovie
@@ -73,6 +74,7 @@ import { useCookie } from "#app";
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
+const loading = ref(true);
 const modal_movie: Ref<Movie | null> = ref(null);
 const movies = defineModel<Movie[] | []>("movies", {
   default: [],
@@ -83,6 +85,7 @@ const logged_in = ref(false);
 const hide_scheduled = ref(false);
 
 const getList = async function (list_id: number) {
+  loading.value = true;
   let config = useRuntimeConfig();
   let headers: any = {
     "Content-type": "application/json",
@@ -100,6 +103,7 @@ const getList = async function (list_id: number) {
       list.value = data;
       movies.value = data?.movies || [];
       filtered_movies.value = movies.value;
+      loading.value = false;
     })
     .catch((err) => {
       if (err.statusCode === 401) {

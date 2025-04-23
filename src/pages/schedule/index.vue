@@ -1,8 +1,12 @@
 <template>
   <div class="p-5 sm:p-0">
-    <div v-if="schedule && schedule?.showings.length < 1" class="p-5">
+    <div
+      v-if="schedule && schedule?.showings.length < 1 && !loading"
+      class="p-5"
+    >
       <span>No Showings Found</span>
     </div>
+    <LoadingIcon v-if="loading" />
     <ul class="flex flex-col gap-5">
       <li
         v-for="showing in schedule?.showings"
@@ -36,7 +40,6 @@
       >
         Previous Showings
       </span>
-      <span id="loader" class="hidden">Loading...</span>
       <ul class="flex flex-col gap-5">
         <li v-for="showing in past_showings" class="p-5 movie-card neon-border">
           <div class="sm:grid grid-cols-2 lg:grid-cols-3">
@@ -68,6 +71,7 @@ const schedule = defineModel<Schedule>("schedule");
 const past_showings = defineModel<Showing[]>("past_showings", {
   default: [],
 });
+const loading = ref(true);
 const got_previous = ref(false);
 const months = [
   "January",
@@ -92,12 +96,11 @@ const formatDate = function (date_string: string) {
 };
 
 const getSchedule = async function (previous = false) {
+  loading.value = true;
   let config = useRuntimeConfig();
   if (got_previous.value) {
     return false;
   }
-
-  document.getElementById("loader")?.classList.toggle("hidden");
 
   let params = "";
   if (previous) params = "?past_showings=true";
@@ -120,7 +123,7 @@ const getSchedule = async function (previous = false) {
       } else {
         schedule.value = data;
       }
-      document.getElementById("loader")?.classList.toggle("hidden");
+      loading.value = false;
     })
     .catch((err) => {
       switch (err.statusCode) {

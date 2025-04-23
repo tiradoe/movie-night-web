@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/web.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/schedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/schedule/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +16,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <execution />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -23,6 +25,7 @@
         <option value="CSS File" />
         <option value="Vue Single File Component" />
         <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -76,9 +79,14 @@
     "npm.dev.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.vue",
+    "settings.editor.selected.configurable": "configurable.group.editor",
     "ts.external.directory.path": "/home/tiradoe/Projects/movie-night/web/src/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -133,7 +141,10 @@
       <workItem from="1743904898331" duration="20256000" />
       <workItem from="1743998844137" duration="23268000" />
       <workItem from="1744430699183" duration="32152000" />
-      <workItem from="1745179755243" duration="37963000" />
+      <workItem from="1745179755243" duration="40533000" />
+      <workItem from="1745366380362" duration="223000" />
+      <workItem from="1745366610986" duration="319000" />
+      <workItem from="1745366940811" duration="1222000" />
     </task>
     <servers />
   </component>
