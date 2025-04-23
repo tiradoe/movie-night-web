@@ -20,7 +20,11 @@
             @close-modal="$emit('close-modal')"
           />
 
-          <button class="my-10 btn p-2 rounded" @click="updateMovie">
+          <button
+            v-if="logged_in"
+            class="my-10 btn p-2 rounded"
+            @click="updateMovie"
+          >
             Refresh movie
           </button>
         </div>
