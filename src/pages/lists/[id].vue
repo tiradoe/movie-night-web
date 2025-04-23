@@ -5,7 +5,9 @@
       <ShowMovie
         v-if="modal_movie"
         :movie="modal_movie"
+        :updating="updating"
         @close-modal="closeModal"
+        @update-movie="updateMovie(modal_movie)"
       ></ShowMovie>
     </Modal>
     <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
@@ -38,7 +40,7 @@
     >
       <li
         v-for="movie in filtered_movies"
-        :key="movie.id"
+        :key="movie.poster"
         class="rounded movie-card neon-border"
       >
         <!-- POSTER -->
@@ -71,6 +73,7 @@ import type { MovieList } from "~/types/movielist";
 import type { Movie } from "~/types/movie";
 import Modal from "~/components/Modal.vue";
 import { useCookie } from "#app";
+import { $fetch } from "ofetch";
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
@@ -166,6 +169,38 @@ const removeMovie = async function (movie_id: string) {
       filtered_movies.value = movies.value;
     }
   }
+};
+
+const updating = ref(false);
+const updateMovie = async function (movie: Movie) {
+  let config = useRuntimeConfig();
+  updating.value = true;
+
+  $fetch<Movie>(`${config.public.apiURL}/movies/${movie.id}/`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
+    },
+    body: JSON.stringify(movie),
+  })
+    .then((data) => {
+      modal_movie.value = data || [];
+      movies.value = movies.value.map((movie) => {
+        return movie.id === data.id ? data : movie;
+      });
+      filtered_movies.value = movies.value;
+      updating.value = false;
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        navigateTo("/");
+      }
+      if (err.statusCode === 404) {
+        alert("Unable to update movie");
+      }
+      updating.value = false;
+    });
 };
 
 const filterMovies = function () {

@@ -1,6 +1,7 @@
 <template>
   <div class="sm:m-5 p-10 movie-card neon-border">
     <div>
+      <LoadingIcon v-if="updating" />
       <h2 class="text-xl pb-3 text-center sm:text-left">
         {{ movie.title }} ({{ movie.year }})
       </h2>
@@ -18,6 +19,10 @@
             class="mt-5"
             @close-modal="$emit('close-modal')"
           />
+
+          <button class="my-10 btn p-2 rounded" @click="updateMovie">
+            Refresh movie
+          </button>
         </div>
       </div>
     </div>
@@ -27,9 +32,13 @@
 <script lang="ts" setup>
 import ScheduleMovie from "~/components/forms/ScheduleMovie.vue";
 
-const props = defineProps(["movie"]);
-const emits = defineEmits(["close-modal"]);
+const props = defineProps(["movie", "updating"]);
+const emits = defineEmits(["close-modal", "update-movie"]);
 const logged_in = ref(false);
+
+const updateMovie = function () {
+  emits("update-movie");
+};
 
 onMounted(() => {
   const token = useCookie("token").value;
