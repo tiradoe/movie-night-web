@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/web.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoadingIcon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoadingIcon.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/schedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/schedule/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +64,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "unauthenticated-requests",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/tiradoe/Projects/movie-night/web/src/types",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -144,7 +142,7 @@
       <workItem from="1745179755243" duration="40533000" />
       <workItem from="1745366380362" duration="223000" />
       <workItem from="1745366610986" duration="319000" />
-      <workItem from="1745366940811" duration="1222000" />
+      <workItem from="1745366940811" duration="4297000" />
     </task>
     <servers />
   </component>
