@@ -120,9 +120,9 @@ const getList = async function (list_id: number) {
 };
 
 const hideScheduled = function () {
-  if (hide_scheduled && movies.value.length > 0) {
+  if (hide_scheduled.value && movies.value.length > 0) {
     let filtered = movies.value.filter((movie) => {
-      return movie.last_watched === null;
+      return !movie.has_been_scheduled;
     });
     if (typeof filtered != "undefined") {
       filtered_movies.value = filtered;

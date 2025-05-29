@@ -10,5 +10,5 @@ export type Movie = {
   actors: string;
   plot: string;
   poster: string;
-  last_watched: string;
+  has_been_scheduled: boolean;
 };
