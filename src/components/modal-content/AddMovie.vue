@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.movie != null" class="sm:m-5 p-10 movie-card neon-border">
     <div>
-      <h2 id="modal-title" class="row pb-10">
+      <h2 id="modal-title" class="row pb-10 text-center sm:text-left">
         {{ movie.title }} ({{ movie.year }})
       </h2>
 
@@ -9,7 +9,7 @@
         <!-- MODAL POSTER -->
         <MoviePoster
           :image="movie.poster"
-          class="max-h-80 max-w-72 sm:max-h-none sm:max-w-none mx-auto sm:mx-none"
+          class="max-h-72 max-w-60 sm:max-h-2xl sm:max-w-72 mx-auto sm:mx-0"
         />
 
         <div class="mx-auto sm:mx-none">

@@ -8,10 +8,11 @@
       <div class="sm:inline-flex sm:space-x-5">
         <MoviePoster
           :image="movie.poster"
-          class="max-h-80 max-w-72 mx-auto sm:mx-none"
+          class="max-h-80 max-w-60 mx-auto sm:mx-none"
         />
         <div class="pt-5 sm:pt-0">
           <p>{{ movie.plot }}</p>
+
           <ScheduleMovie
             v-if="logged_in"
             :movie="movie"
