@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/search.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal-content/ShowMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/ShowMovie.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
-    </list>
+    <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +141,7 @@
       <workItem from="1745366610986" duration="319000" />
       <workItem from="1745366940811" duration="4297000" />
       <workItem from="1748541588253" duration="2587000" />
-      <workItem from="1750288132986" duration="17621000" />
+      <workItem from="1750288132986" duration="18089000" />
     </task>
     <servers />
   </component>
