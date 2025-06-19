@@ -7,6 +7,7 @@
         class="p-5"
       >
         <span>No Showings Found</span>
+        <MovieQuote />
       </div>
       <ul class="flex flex-col gap-5">
         <li
@@ -35,7 +36,7 @@
 
       <!-- PREVIOUS SHOWINGS -->
       <LoadingIcon v-if="loadingPrevious" />
-      <div v-else id="previous-showings" class="mt-5 list-group">
+      <div v-else id="previous-showings" class="p-5 mt-5 list-group">
         <span
           class="block mb-5 hover-pointer underline"
           @click="getSchedule(true)"

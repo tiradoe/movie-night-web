@@ -1,9 +1,15 @@
 <template>
-  <div class="p-5 sm:p-0">
-    <div v-if="lists.length < 1 && !loading">
+  <div>
+    <LoadingIcon
+      v-if="loading"
+      class="w-full p-5 sm:p-0 max-w-2xl"
+      show-quote="true"
+    />
+
+    <div v-if="lists.length < 1 && !loading" class="flex flex-col gap-10">
       <p>No lists found</p>
+      <MovieQuote />
     </div>
-    <LoadingIcon v-if="loading" />
 
     <ul class="grid grid-cols-2 gap-3 mt-5">
       <li v-for="list in lists" class="movie-card neon-border p-5 rounded">

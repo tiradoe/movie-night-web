@@ -1,4 +1,5 @@
 <template>
+  <LoadingIcon v-if="loading" class="p-1 bg-gray-900 rounded-3xl" />
   <form class="py-3 p-sm-0 align-items-center" @submit="findMovies">
     <label class="px-0" for="search-field">Search</label>
     <div class="px-0 mx-0">
@@ -19,6 +20,8 @@
 <script lang="ts" setup>
 import type { Movie } from "~/types/movie";
 
+const loading = ref(false);
+
 const emit = defineEmits<{
   (e: "show-modal", movie: Movie): void;
 }>();
@@ -31,6 +34,7 @@ const showModal = (movie: Movie) => {
 const findMovies = async function (e: Event) {
   let config = useRuntimeConfig();
   e.preventDefault();
+  loading.value = true;
   let searchTerm = (document.getElementById("search-field") as HTMLInputElement)
     ?.value;
 
@@ -60,6 +64,7 @@ const findMovies = async function (e: Event) {
       movies.value = data.value || [];
     }
   }
+  loading.value = false;
 };
 </script>
 

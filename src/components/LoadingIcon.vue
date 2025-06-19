@@ -1,23 +1,22 @@
 <template>
-  <video
-    alt="Loading"
-    autoplay
-    class="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    loop
-    muted
-    playsinline
+  <div
+    class="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex-col"
   >
-    <source
-      v-if="supportsHEVC"
-      src="/assets/img/movie-loader.mov"
-      type="video/quicktime"
-    />
-    <source v-else src="/assets/img/movie-loader.webm" type="video/webm" />
-  </video>
+    <video alt="Loading" autoplay class="max-h-52" loop muted playsinline>
+      <source
+        v-if="supportsHEVC"
+        src="/assets/img/movie-loader.mov"
+        type="video/quicktime"
+      />
+      <source v-else src="/assets/img/movie-loader.webm" type="video/webm" />
+    </video>
+    <MovieQuote v-if="props.showQuote" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 const supportsHEVC = ref(false);
+const props = defineProps(["showQuote"]);
 
 onMounted(() => {
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

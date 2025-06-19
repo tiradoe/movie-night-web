@@ -1,5 +1,5 @@
 <template>
-  <LoadingIcon v-if="loading" />
+  <LoadingIcon v-if="loading" show-quote="true" />
   <div v-else class="p-5 sm:p-0">
     <Modal ref="movie_modal">
       <ShowMovie
@@ -11,7 +11,10 @@
       ></ShowMovie>
     </Modal>
     <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
-    <div class="grid grid-cols-2 rounded movie-card neon-border p-5">
+    <div
+      v-if="movies.length > 1 && !loading"
+      class="grid grid-cols-2 rounded movie-card neon-border p-5"
+    >
       <div>
         <ul class="flex flex-row">
           <li>
@@ -34,8 +37,13 @@
       />
     </div>
 
+    <div v-if="movies.length < 1 && !loading" class="mt-10 flex gap-5 flex-col">
+      No Movies Found
+      <MovieQuote />
+    </div>
     <!-- MOVIE LIST -->
     <ul
+      v-else
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5"
     >
       <li
