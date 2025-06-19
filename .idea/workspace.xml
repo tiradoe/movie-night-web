@@ -7,6 +7,11 @@
     <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/search.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/AddMovie.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal-content/ShowMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal-content/ShowMovie.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/default.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +81,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "npm.dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier",
+    "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/MovieNight/movie-night-web/src/node_modules/prettier",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "configurable.group.editor",
     "ts.external.directory.path": "/home/tiradoe/Projects/MovieNight/movie-night-web/src/node_modules/typescript/lib",
@@ -145,7 +150,7 @@
       <workItem from="1745366610986" duration="319000" />
       <workItem from="1745366940811" duration="4297000" />
       <workItem from="1748541588253" duration="2587000" />
-      <workItem from="1750288132986" duration="9330000" />
+      <workItem from="1750288132986" duration="17621000" />
     </task>
     <servers />
   </component>
