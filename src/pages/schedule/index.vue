@@ -1,6 +1,6 @@
 <template>
   <div class="p-5 sm:p-0">
-    <LoadingIcon v-if="loading" />
+    <LoadingIcon v-if="loading" show-quote="true" />
     <div v-else>
       <div
         v-if="schedule && schedule?.showings.length < 1 && !loading"
