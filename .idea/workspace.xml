@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/nuxt.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lists/[id].vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lists/[id].vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/movie.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/movie.ts" afterDir="false" />
-    </list>
+    <list default="true" id="5e320804-68c9-4504-97d5-d421de3438b2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,7 +60,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "poster-improvements",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/home/tiradoe/Projects/MovieNight/movie-night-web",
     "list.type.of.created.stylesheet": "CSS",
@@ -78,7 +72,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "npm.dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/movie-night/web/src/node_modules/prettier",
+    "prettierjs.PrettierConfiguration.Package": "/home/tiradoe/Projects/MovieNight/movie-night-web/src/node_modules/prettier",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "configurable.group.editor",
     "ts.external.directory.path": "/home/tiradoe/Projects/MovieNight/movie-night-web/src/node_modules/typescript/lib",
@@ -117,8 +111,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PS-251.25410.148" />
-        <option value="bundled-php-predefined-a98d8de5180a-c5828cf854d9-com.jetbrains.php.sharedIndexes-PS-251.25410.148" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-PS-251.26094.133" />
+        <option value="bundled-php-predefined-a98d8de5180a-c5828cf854d9-com.jetbrains.php.sharedIndexes-PS-251.26094.133" />
       </set>
     </attachedChunks>
   </component>
@@ -147,6 +141,7 @@
       <workItem from="1745366610986" duration="319000" />
       <workItem from="1745366940811" duration="4297000" />
       <workItem from="1748541588253" duration="2587000" />
+      <workItem from="1750288132986" duration="18089000" />
     </task>
     <servers />
   </component>
