@@ -2,14 +2,13 @@
   <div class="sm:m-5 p-10 movie-card neon-border">
     <div>
       <LoadingIcon v-if="updating" />
-      <h2 class="text-xl pb-3 text-center sm:text-left">
+      <h2 class="text-xl pb-10 text-center sm:text-left">
         {{ movie.title }} ({{ movie.year }})
       </h2>
       <div class="sm:inline-flex sm:space-x-5">
-        <img
-          :src="movie.poster"
-          alt="movie poster"
-          class="mx-auto sm:mx-0 neon-border"
+        <MoviePoster
+          :image="movie.poster"
+          class="max-h-80 max-w-72 mx-auto sm:mx-none"
         />
         <div class="pt-5 sm:pt-0">
           <p>{{ movie.plot }}</p>

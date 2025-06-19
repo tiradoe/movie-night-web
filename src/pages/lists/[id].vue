@@ -41,16 +41,15 @@
       <li
         v-for="movie in filtered_movies"
         :key="movie.poster"
-        class="rounded movie-card neon-border"
+        class="rounded movie-card neon-border flex flex-col overflow-hidden"
       >
         <!-- POSTER -->
-        <img
-          :data-src="movie.poster"
-          alt="movie poster"
-          class="lazyload p-3 movie-poster hover-pointer mx-auto"
+        <MoviePoster
+          :image="movie.poster"
+          class="flex-shrink-0"
           @click="showModal(movie)"
         />
-        <div class="p-5 flex flex-col">
+        <div class="p-5 flex flex-col justify-between flex-1">
           <!-- TITLE -->
           <span class="font-bold text-center mb-1">{{ movie.title }}</span>
           <span
@@ -74,6 +73,7 @@ import type { Movie } from "~/types/movie";
 import Modal from "~/components/Modal.vue";
 import { useCookie } from "#app";
 import { $fetch } from "ofetch";
+import MoviePoster from "~/components/MoviePoster.vue";
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });

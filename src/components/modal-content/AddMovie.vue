@@ -1,22 +1,18 @@
 <template>
   <div v-if="props.movie != null" class="sm:m-5 p-10 movie-card neon-border">
     <div>
-      <h2 id="modal-title" class="row pb-3">
+      <h2 id="modal-title" class="row pb-10">
         {{ movie.title }} ({{ movie.year }})
       </h2>
 
-      <div class="grid sm:grid-cols-2">
+      <div class="grid sm:grid-cols-2 gap-5">
         <!-- MODAL POSTER -->
-        <div class="text-end">
-          <img
-            id="modal-poster"
-            :src="movie.poster"
-            alt="poster"
-            class="pt-5"
-          />
-        </div>
+        <MoviePoster
+          :image="movie.poster"
+          class="max-h-80 max-w-72 sm:max-h-none sm:max-w-none mx-auto sm:mx-none"
+        />
 
-        <div class="pt-5">
+        <div class="mx-auto sm:mx-none">
           <label class="" for="list-picker">Add To List</label><br />
           <select id="list-picker" v-model="list_id" class="p-1 text-black">
             <option v-for="list in lists" :value="list.id">

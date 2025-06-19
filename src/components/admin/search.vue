@@ -8,12 +8,7 @@
   </form>
   <ul class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
     <li v-for="movie in movies" class="p-1 movie-card">
-      <img
-        :src="movie.poster"
-        alt="movie poster"
-        class="neon-border hover-pointer"
-        @click="showModal(movie)"
-      />
+      <MoviePoster :image="movie.poster" @click="showModal(movie)" />
       <div class="p-2">
         <h5 class="text-center">{{ movie.title }} ({{ movie.year }})</h5>
       </div>
