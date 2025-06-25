@@ -10,7 +10,6 @@
       />
       <source v-else src="/assets/img/movie-loader.webm" type="video/webm" />
     </video>
-    <MovieQuote v-if="props.showQuote" />
   </div>
 </template>
 
