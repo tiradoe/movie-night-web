@@ -19,6 +19,7 @@
 
 <script lang="ts" setup>
 import type { Movie } from "~/types/movie";
+import "lazysizes";
 
 const loading = ref(false);
 
@@ -42,29 +43,27 @@ const findMovies = async function (e: Event) {
     return;
   }
 
-  const { data, error } = await useFetch<Movie[]>(
-    `${config.public.apiURL}/movies/search?q=${searchTerm}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Token ${useCookie("token").value}`,
-      },
+  $fetch<Movie[]>(`${config.public.apiURL}/movies/search?q=${searchTerm}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
     },
-  );
-
-  if (error.value) {
-    if (error.value.statusCode === 401) {
-      alert("Unauthorized");
-    }
-  } else {
-    if (!data.value) {
-      alert("No movies found.");
-    } else {
-      movies.value = data.value || [];
-    }
-  }
-  loading.value = false;
+  })
+    .then((data) => {
+      movies.value = data;
+      loading.value = false;
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        navigateTo("/login");
+      } else if (err.statusCode === 404) {
+        alert("No movies found");
+        loading.value = false;
+      } else {
+        alert("An error occurred. Please try again later.");
+      }
+    });
 };
 </script>
 
