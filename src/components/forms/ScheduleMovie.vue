@@ -43,7 +43,8 @@ const schedule = function (e: Event) {
     return false;
   }
 
-  const date = new Date(`${showtime_input}T00:00:00`);
+  let date = new Date(`${showtime_input}T23:00:00`);
+  convertToUserTimezone(date);
 
   fetch(`${config.public.apiURL}/showings/`, {
     method: "POST",
@@ -58,11 +59,15 @@ const schedule = function (e: Event) {
       Authorization: `Token ${useCookie("token").value}`,
     },
   })
-    .then((response) => response.json())
-    .then((_json) => {
+    .then((_resp) => {
       emits("closeModal");
     })
     .catch((err) => alert("Unable to schedule movie. Error:\n" + err));
+};
+
+// @todo pull the timezone from a user setting
+const convertToUserTimezone = function (date: Date) {
+  date.toLocaleString("en-US", { timeZone: "America/Chicago" });
 };
 </script>
 
