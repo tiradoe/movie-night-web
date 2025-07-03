@@ -86,7 +86,10 @@ const getLists = function () {
   const config = useRuntimeConfig();
   $fetch<MovieList[]>(`${config.public.apiURL}/lists`, {
     method: "GET",
-    headers: { "Content-type": "application/json" },
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
+    },
   })
     .then((data) => (lists.value = data))
     .catch((err) => console.log(err));
