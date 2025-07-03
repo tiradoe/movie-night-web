@@ -43,7 +43,7 @@ const schedule = function (e: Event) {
     return false;
   }
 
-  let date = new Date(`${showtime_input}T23:00:00`);
+  let date = new Date(`${showtime_input}T23:59:00`);
   convertToUserTimezone(date);
 
   fetch(`${config.public.apiURL}/showings/`, {
