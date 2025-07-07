@@ -78,7 +78,7 @@ import ShowMovie from "~/components/modal-content/ShowMovie.vue";
 import "lazysizes";
 import type { MovieList } from "~/types/movielist";
 import type { Movie } from "~/types/movie";
-import Modal from "~/components/Modal.vue";
+import Modal from "~/components/common/ui/Modal.vue";
 import { useCookie } from "#app";
 import { $fetch } from "ofetch";
 import MoviePoster from "~/components/MoviePoster.vue";

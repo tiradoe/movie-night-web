@@ -9,7 +9,12 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@vesp/nuxt-fontawesome"],
+  fontawesome: {
+    icons: {
+      solid: ["user"],
+    },
+  },
   css: ["@/assets/css/main.css"],
   compatibilityDate: "2025-04-05",
 

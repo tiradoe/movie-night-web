@@ -54,9 +54,9 @@ import AddMovie from "~/components/modal-content/AddMovie.vue";
 import Search from "~/components/admin/search.vue";
 import Showings from "~/components/admin/showings.vue";
 import Lists from "~/components/admin/lists.vue";
-import { useCookie } from "#app";
 import type { Movie } from "~/types/movie";
-import Modal from "~/components/Modal.vue";
+import Modal from "~/components/common/ui/Modal.vue";
+import { logout } from "~/composables/logout";
 
 const modal_movie = defineModel<Movie>("#movie-modal");
 
@@ -87,30 +87,6 @@ const toggleDisplay = function (element_id: string) {
     }
   });
 };
-const logout = () => {
-  let config = useRuntimeConfig();
-  fetch(`${config.public.apiURL}/auth/logout/`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Token ${useCookie("token").value}`,
-    },
-  })
-    .then((response) => response)
-    .then((_json) => {
-      let token = useCookie("token");
-      token.value = null;
-      navigateTo("/");
-    })
-    .catch((err) => console.log(err));
-};
-
-onMounted(() => {
-  const token = useCookie("token").value;
-  if (!token) {
-    navigateTo("/");
-  }
-});
 </script>
 
 <style scoped></style>
