@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCookie } from "#app";
-import type { UserProfile } from "~/types/user_profile";
+import type { UserProfile } from "~/types/userProfile";
 
 const config = useRuntimeConfig();
 
@@ -29,48 +29,53 @@ const getProfile = async function () {
 
 const formatDate = function (date_string: string) {
   return new Date(date_string).toLocaleDateString();
-}
+};
 
 onMounted(getProfile);
 </script>
 
 <template>
-  <h2 class="page-header">Profile</h2>
-  <div id="profile-card" class="movie-card neon-border">
-    <div id="user-data">
-      <div id="profile-picture">
-        <img
-          alt="profile image"
-          class="user-icon neon-border"
-          src="https://placecage.lucidinternets.com/g/200/200"
-        />
-      </div>
-      <ul class="profile-details">
-        <li class="user-detail">
-          <label for="name">Name</label>
-          <span id="name">{{profile?.name || profile?.username}}</span>
-        </li>
-        <li class="user-detail">
-          <label for="username">Username</label>
-          <span id="username">{{ profile?.username }}@movienight.social</span>
-        </li>
-        <li class="user-detail">
-          <label for="date-joined">Date Joined</label>
-          <span id="date-joined">{{ formatDate(profile?.date_joined || "") }}</span>
-        </li>
-      </ul>
-    </div>
-
-    <hr class="neon-border my-5" />
-
-    <div id="extra-fields">
-      <div id="movielists">
-        <h3 class="section-header">Lists</h3>
-        <ul id="movielist-list">
-          <li v-for="list in profile?.lists">
-            <NuxtLink :to="`/lists/${list.id}`">{{ list.name }}</NuxtLink>
+  <LoadingIcon v-if="loading" show-quote="true" />
+  <div v-else>
+    <h2 class="page-header">Profile</h2>
+    <div id="profile-card" class="movie-card neon-border">
+      <div id="user-data">
+        <div id="profile-picture">
+          <img
+            alt="profile image"
+            class="user-icon neon-border"
+            src="https://placecage.lucidinternets.com/g/200/200"
+          />
+        </div>
+        <ul class="profile-details">
+          <li class="user-detail">
+            <label for="name">Name</label>
+            <span id="name">{{ profile?.name || profile?.username }}</span>
+          </li>
+          <li class="user-detail">
+            <label for="username">Username</label>
+            <span id="username">{{ profile?.username }}@movienight.social</span>
+          </li>
+          <li class="user-detail">
+            <label for="date-joined">Date Joined</label>
+            <span id="date-joined">{{
+              formatDate(profile?.date_joined || "")
+            }}</span>
           </li>
         </ul>
+      </div>
+
+      <hr class="neon-border my-5" />
+
+      <div id="extra-fields">
+        <div id="movielists">
+          <h3 class="section-header">Lists</h3>
+          <ul id="movielist-list">
+            <li v-for="list in profile?.lists">
+              <NuxtLink :to="`/lists/${list.id}`">{{ list.name }}</NuxtLink>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { logout } from "~/composables/logout";
 
-const isAuthenticated = ref(false);
 let isOpened = ref(false);
 const menuRef = ref<HTMLElement>();
 
@@ -51,9 +50,11 @@ onMounted(() => {
         <li role="none">
           <NuxtLink class="menu-link" to="/user/profile"> Profile</NuxtLink>
         </li>
+        <!--
         <li role="none">
           <NuxtLink class="menu-link" to="/user/settings"> Settings</NuxtLink>
         </li>
+        -->
         <li
           id="logout"
           class="menu-link"

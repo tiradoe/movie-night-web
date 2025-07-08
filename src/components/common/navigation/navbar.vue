@@ -2,7 +2,7 @@
   <div
     class="grid grid-rows-2 text-center sm:text-left sm:grid-rows-none sm:grid-cols-2 my-5 navbar w-full"
   >
-    <NuxtLink class="block" to="/admin">
+    <NuxtLink class="block" to="/">
       <h1 class="block site-title bloodseeker">Cinema Corona</h1>
     </NuxtLink>
 
@@ -15,17 +15,17 @@
       <li>
         <NuxtLink class="text-xl header-link" to="/schedule">Schedule</NuxtLink>
       </li>
-      <li>
+      <li v-if="authenticated">
         <ProfileMenu />
       </li>
     </ul>
   </div>
 </template>
 
-<script>
-export default {
-  name: "navbar",
-};
+<script lang="ts" setup>
+import { hasToken } from "~/composables/hasToken";
+
+const authenticated = computed(() => hasToken());
 </script>
 
 <style scoped></style>

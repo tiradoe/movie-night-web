@@ -17,10 +17,3 @@ export function logout() {
     })
     .catch((err) => console.log(err));
 }
-
-onMounted(() => {
-  const token = useCookie("token").value;
-  if (!token) {
-    navigateTo("/");
-  }
-});
