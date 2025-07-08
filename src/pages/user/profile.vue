@@ -1,4 +1,38 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useCookie } from "#app";
+import type { UserProfile } from "~/types/user_profile";
+
+const config = useRuntimeConfig();
+
+const profile = defineModel<UserProfile>("profile");
+const loading = ref(true);
+
+const getProfile = async function () {
+  await $fetch<UserProfile>(`${config.public.apiURL}/users/profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${useCookie("token").value}`,
+    },
+  })
+    .then((data) => {
+      profile.value = data;
+      loading.value = false;
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        useCookie("token").value = null;
+        navigateTo("/");
+      }
+    });
+};
+
+const formatDate = function (date_string: string) {
+  return new Date(date_string).toLocaleDateString();
+}
+
+onMounted(getProfile);
+</script>
 
 <template>
   <h2 class="page-header">Profile</h2>
@@ -14,15 +48,15 @@
       <ul class="profile-details">
         <li class="user-detail">
           <label for="name">Name</label>
-          <span id="name">Eddie Tirado</span>
+          <span id="name">{{profile?.name || profile?.username}}</span>
         </li>
         <li class="user-detail">
           <label for="username">Username</label>
-          <span id="username">tiradoe@movienight.social</span>
+          <span id="username">{{ profile?.username }}@movienight.social</span>
         </li>
         <li class="user-detail">
           <label for="date-joined">Date Joined</label>
-          <span id="date-joined">8 Feb 1984</span>
+          <span id="date-joined">{{ formatDate(profile?.date_joined || "") }}</span>
         </li>
       </ul>
     </div>
@@ -30,25 +64,13 @@
     <hr class="neon-border my-5" />
 
     <div id="extra-fields">
-      <div id="reviews">
-        <h3 class="section-header">Reviews</h3>
-        <ul class="movie-review-list">
-          <li class="movie-review">
-            <span>The Room</span>
-            <span>*****</span>
-            <span>Best. Movie. Ever.</span>
-          </li>
-          <li class="movie-review">
-            <span>Citizen Kane</span>
-            <span>*</span>
-            <span>Trash</span>
-          </li>
-        </ul>
-      </div>
-
       <div id="movielists">
         <h3 class="section-header">Lists</h3>
-        <ul id="movielist-list"></ul>
+        <ul id="movielist-list">
+          <li v-for="list in profile?.lists">
+            <NuxtLink :to="`/lists/${list.id}`">{{ list.name }}</NuxtLink>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
