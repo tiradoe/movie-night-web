@@ -26,7 +26,7 @@ const loading = ref(false);
 const emit = defineEmits<{
   (e: "show-modal", movie: Movie): void;
 }>();
-const movies = defineModel<Movie[]>("movie_list", { default: [] });
+const movies = ref<Movie[]>([]);
 
 const showModal = (movie: Movie) => {
   emit("show-modal", movie);

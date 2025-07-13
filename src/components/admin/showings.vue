@@ -28,25 +28,9 @@ import { useCookie } from "#app";
 import type { Schedule } from "~/types/schedule";
 import { $fetch } from "ofetch";
 
-const showings = defineModel<Showing[]>("showings", { default: [] });
-const previous_showings = defineModel<Showing[]>("previous_showings", {
-  default: [],
-});
+const showings = ref<Showing[]>([]);
+const previous_showings = ref<Showing[]>([]);
 const got_previous = ref(false);
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 onMounted(() => {
   getShowings();
@@ -54,6 +38,20 @@ onMounted(() => {
 
 const formatDate = function (date_string: string) {
   let parsed_date = new Date(Date.parse(date_string));
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   let month = months[parsed_date.getMonth()];
 
   return `${month} ${parsed_date.getDate()}, ${parsed_date.getFullYear()}`;

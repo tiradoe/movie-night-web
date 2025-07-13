@@ -35,8 +35,9 @@
 
 <script lang="ts" setup>
 import ScheduleMovie from "~/components/forms/ScheduleMovie.vue";
+import type { Movie } from "~/types/movie";
 
-const props = defineProps(["movie", "updating"]);
+defineProps<{ movie: Movie; updating: boolean }>();
 const emits = defineEmits(["close-modal", "update-movie"]);
 const logged_in = ref(false);
 

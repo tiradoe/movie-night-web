@@ -2,7 +2,7 @@
 import placeholderPoster from "assets/img/poster-placeholder.svg";
 
 const imgRef = ref<HTMLImageElement | null>(null);
-const props = defineProps(["image"]);
+const props = defineProps<{ image: string }>();
 
 const handleImageError = function (event: Event) {
   (event.target as HTMLImageElement).classList.remove("lazyload");

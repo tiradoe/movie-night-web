@@ -12,7 +12,7 @@
           @update-movie="updateMovie(modal_movie)"
         ></ShowMovie>
       </Modal>
-      <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
+      <h2 class="text-xl font-bold pb-5">{{ list?.name }}</h2>
       <div
         v-if="movies.length > 1 && !loading"
         class="grid grid-cols-2 rounded movie-card neon-border p-5"
@@ -91,13 +91,11 @@ import MoviePoster from "~/components/MoviePoster.vue";
 import ScrollToTop from "~/components/common/navigation/ScrollToTop.vue";
 
 const list_id = ref(0);
-const list = defineModel<MovieList>("movie_list", { default: [] });
+const list = ref<MovieList | null>(null);
 const loading = ref(true);
 const modal_movie: Ref<Movie | null> = ref(null);
-const movies = defineModel<Movie[] | []>("movies", {
-  default: [],
-});
-const filtered_movies = defineModel<Movie[]>("filtered_movies");
+const movies = ref<Movie[]>(new Array<Movie>());
+const filtered_movies = ref<Movie[]>(new Array<Movie>());
 const movie_query = ref("");
 const logged_in = ref(false);
 const hide_scheduled = ref(false);
@@ -119,7 +117,7 @@ const getList = async function (list_id: number) {
   })
     .then((data) => {
       list.value = data;
-      movies.value = data?.movies || [];
+      movies.value = data?.movies || new Array<Movie>();
       filtered_movies.value = movies.value;
       loading.value = false;
     })

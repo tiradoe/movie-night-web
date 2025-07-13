@@ -28,7 +28,7 @@
 import type { MovieList } from "~/types/movielist";
 import { useCookie } from "#app";
 
-const lists = defineModel<MovieList[]>("movie_list", { default: [] });
+const lists = ref<MovieList[]>(new Array<MovieList>());
 const loading = ref(true);
 
 const updateLists = async function () {
@@ -47,7 +47,7 @@ const updateLists = async function () {
     headers: headers,
   })
     .then((data) => {
-      lists.value = data || [];
+      lists.value = data || new Array<MovieList>();
       loading.value = false;
     })
     .catch((err) => {
