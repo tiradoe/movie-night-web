@@ -24,6 +24,7 @@
 
 <script lang="ts" setup>
 import { hasToken } from "~/composables/hasToken";
+import ProfileMenu from "~/components/common/menus/ProfileMenu.vue";
 
 const authenticated = computed(() => hasToken());
 </script>
