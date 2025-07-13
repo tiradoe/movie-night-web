@@ -15,7 +15,6 @@
 
 <script lang="ts" setup>
 const supportsHEVC = ref(false);
-const props = defineProps(["showQuote"]);
 
 onMounted(() => {
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

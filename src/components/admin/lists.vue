@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import type { MovieList } from "~/types/movielist";
 
-const lists = defineModel<MovieList[]>("lists", { default: [] });
+const lists = ref<MovieList[]>([]);
 
 const addList = async function () {
   let config = useRuntimeConfig();

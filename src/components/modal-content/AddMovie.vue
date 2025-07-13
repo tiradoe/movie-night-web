@@ -34,10 +34,11 @@
 
 <script lang="ts" setup>
 import type { MovieList } from "~/types/movielist";
+import type { Movie } from "~/types/movie";
 
-const props = defineProps(["movie"]);
+const props = defineProps<{ movie: Movie }>();
 const list_id = ref(0);
-const lists = defineModel<MovieList[]>("lists", { default: [] });
+const lists = ref<MovieList[]>(new Array<MovieList>());
 const emit = defineEmits<{
   (e: "close-modal"): void;
 }>();

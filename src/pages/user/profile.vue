@@ -4,7 +4,7 @@ import type { UserProfile } from "~/types/userProfile";
 
 const config = useRuntimeConfig();
 
-const profile = defineModel<UserProfile>("profile");
+const profile = ref<UserProfile | null>(null);
 const loading = ref(true);
 
 const getProfile = async function () {

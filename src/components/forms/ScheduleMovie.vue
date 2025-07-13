@@ -27,7 +27,9 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps(["movie"]);
+import type { Movie } from "~/types/movie";
+
+const props = defineProps<{ movie: Movie }>();
 const emits = defineEmits(["closeModal"]);
 
 const schedule = function (e: Event) {

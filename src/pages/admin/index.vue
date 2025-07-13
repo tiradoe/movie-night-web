@@ -58,7 +58,7 @@ import type { Movie } from "~/types/movie";
 import Modal from "~/components/common/ui/Modal.vue";
 import { logout } from "~/composables/logout";
 
-const modal_movie = defineModel<Movie>("#movie-modal");
+const modal_movie = ref<Movie | null>(null);
 
 const movie_modal = ref<InstanceType<typeof Modal> | null>(null);
 const current_view = ref("search");
@@ -72,7 +72,7 @@ const showModal = function (movie: Movie) {
 };
 const toggleDisplay = function (element_id: string) {
   if (element_id === current_view.value) return;
-  let tabs = ["search", "showings", "lists"];
+  const tabs = ["search", "showings", "lists"];
 
   tabs.forEach((value) => {
     if (value === element_id) {
