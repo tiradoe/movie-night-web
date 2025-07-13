@@ -1,75 +1,81 @@
 <template>
-  <LoadingIcon v-if="loading" show-quote="true" />
-  <div v-else class="p-5 sm:p-0">
-    <Modal ref="movie_modal">
-      <ShowMovie
-        v-if="modal_movie"
-        :movie="modal_movie"
-        :updating="updating"
-        @close-modal="closeModal"
-        @update-movie="updateMovie(modal_movie)"
-      ></ShowMovie>
-    </Modal>
-    <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
-    <div
-      v-if="movies.length > 1 && !loading"
-      class="grid grid-cols-2 rounded movie-card neon-border p-5"
-    >
-      <div>
-        <ul class="flex flex-row">
-          <li>
-            <label class="mr-2" for="hide_scheduled">Hide Scheduled</label>
-            <input
-              id="hide_scheduled"
-              v-model="hide_scheduled"
-              type="checkbox"
-              @change="hideScheduled"
-            />
-          </li>
-        </ul>
-      </div>
-      <input
-        v-model="movie_query"
-        class="p-1 rounded"
-        placeholder="Filter Movies"
-        type="text"
-        @input="filterMovies"
-      />
-    </div>
-
-    <div v-if="movies.length < 1 && !loading" class="mt-10 flex gap-5 flex-col">
-      No Movies Found
-      <MovieQuote />
-    </div>
-    <!-- MOVIE LIST -->
-    <ul
-      v-else
-      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5"
-    >
-      <li
-        v-for="movie in filtered_movies"
-        :key="movie.poster"
-        class="rounded movie-card neon-border flex flex-col overflow-hidden"
+  <div>
+    <LoadingIcon v-if="loading" show-quote="true" />
+    <div v-else class="p-5 sm:p-0">
+      <ScrollToTop></ScrollToTop>
+      <Modal ref="movie_modal">
+        <ShowMovie
+          v-if="modal_movie"
+          :movie="modal_movie"
+          :updating="updating"
+          @close-modal="closeModal"
+          @update-movie="updateMovie(modal_movie)"
+        ></ShowMovie>
+      </Modal>
+      <h2 class="text-xl font-bold pb-5">{{ list.name }}</h2>
+      <div
+        v-if="movies.length > 1 && !loading"
+        class="grid grid-cols-2 rounded movie-card neon-border p-5"
       >
-        <!-- POSTER -->
-        <MoviePoster
-          :image="movie.poster"
-          class="flex-shrink-0"
-          @click="showModal(movie)"
-        />
-        <div class="p-5 flex flex-col justify-between flex-1">
-          <!-- TITLE -->
-          <span class="font-bold text-center mb-1">{{ movie.title }}</span>
-          <span
-            v-if="logged_in"
-            class="text-center hover-pointer"
-            @click="removeMovie(movie.imdb_id)"
-          >
-            X
-          </span>
+        <div>
+          <ul class="flex flex-row">
+            <li>
+              <label class="mr-2" for="hide_scheduled">Hide Scheduled</label>
+              <input
+                id="hide_scheduled"
+                v-model="hide_scheduled"
+                type="checkbox"
+                @change="hideScheduled"
+              />
+            </li>
+          </ul>
         </div>
-      </li>
-    </ul>
+        <input
+          v-model="movie_query"
+          class="p-1 rounded"
+          placeholder="Filter Movies"
+          type="text"
+          @input="filterMovies"
+        />
+      </div>
+
+      <div
+        v-if="movies.length < 1 && !loading"
+        class="mt-10 flex gap-5 flex-col"
+      >
+        No Movies Found
+        <MovieQuote />
+      </div>
+      <!-- MOVIE LIST -->
+      <ul
+        v-else
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5"
+      >
+        <li
+          v-for="movie in filtered_movies"
+          :key="movie.poster"
+          class="rounded movie-card neon-border flex flex-col overflow-hidden"
+        >
+          <!-- POSTER -->
+          <MoviePoster
+            :image="movie.poster"
+            class="flex-shrink-0"
+            @click="showModal(movie)"
+          />
+          <div class="p-5 flex flex-col justify-between flex-1">
+            <!-- TITLE -->
+            <span class="font-bold text-center mb-1">{{ movie.title }}</span>
+            <span
+              v-if="logged_in"
+              class="text-center hover-pointer"
+              @click="removeMovie(movie.imdb_id)"
+            >
+              X
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -82,6 +88,7 @@ import Modal from "~/components/common/ui/Modal.vue";
 import { useCookie } from "#app";
 import { $fetch } from "ofetch";
 import MoviePoster from "~/components/MoviePoster.vue";
+import ScrollToTop from "~/components/common/navigation/ScrollToTop.vue";
 
 const list_id = ref(0);
 const list = defineModel<MovieList>("movie_list", { default: [] });
@@ -238,6 +245,7 @@ onMounted(() => {
   const route = useRoute();
   if (typeof route.params.id === "string") {
     const list_param: string = route.params.id;
+
     list_id.value = parseInt(list_param);
     getList(list_id.value);
   }
