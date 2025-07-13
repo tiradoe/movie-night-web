@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-//const props = defineProps(['show']);
 const showScroll = ref(false);
 const updateScrollPosition = () => {
   showScroll.value = document.documentElement.scrollTop > 1500;
@@ -35,7 +34,7 @@ onUnmounted(() => {
   z-index: 1000;
   cursor: pointer;
   background-color: rgba(112, 128, 144, 0.8);
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 10px;
 }
 
