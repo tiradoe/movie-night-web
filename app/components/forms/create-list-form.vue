@@ -1,12 +1,32 @@
 <script lang="ts" setup>
+const emit = defineEmits(['refreshLists']);
+const refreshLists = () => emit('refreshLists');
+const listName = ref("");
 
+const createList = () => {
+  $api('/api/movielists', {
+    body: {
+      name: listName.value,
+    },
+    method: "POST"
+  }).then(() => {
+    listName.value = "";
+    refreshLists();
+  }).catch((error) => {
+    if (error.response?.status === 401) {
+      useAuth().logout();
+    }
+    alert(error.message)
+  });
+}
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="createList">
     <label for="list_name">Add List</label>
     <div>
-      <input class="" name="list_name"
+      <input v-model="listName"
+             name="list_name"
              placeholder="List Name"
              type="text">
       <button>Add</button>
