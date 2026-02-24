@@ -2,11 +2,13 @@
 const dropdownOpen = ref(false)
 const profileMenu = ref<HTMLElement | null>(null)
 
-function toggleDropdown() {
+const {logout} = useAuth()
+
+const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value
 }
 
-function onClickOutside(e: MouseEvent) {
+const onClickOutside = (e: MouseEvent) => {
   if (profileMenu.value && !profileMenu.value.contains(e.target as Node)) {
     dropdownOpen.value = false
   }
@@ -26,7 +28,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
       <li>
         <NuxtLink to="/account" @click="dropdownOpen = false">Account</NuxtLink>
       </li>
-      <li>Log Out</li>
+      <li @click="logout">Log Out</li>
     </ul>
   </div>
 </template>
