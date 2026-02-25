@@ -12,6 +12,11 @@ export const $api = <T>(
             Accept: 'application/json',
             ...(xsrfToken.value ? {'X-XSRF-TOKEN': xsrfToken.value} : {}),
         },
+        onResponseError({response}) {
+            if (response.status === 401) {
+                navigateTo('/auth/login')
+            }
+        },
         ...options,
     })
 }

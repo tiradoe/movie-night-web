@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import PageTitle from "~/components/common/page-title.vue";
 import {type Movie} from "~/types/movie";
-import {type List} from "~/types/list";
+import {type MovieList} from "~/types/movie-list";
 import MovieDetails from "~/components/panels/movie-details.vue";
+import MovieSearch from "~/components/panels/movie-search.vue";
 
+const route = useRoute();
+
+const movieListId = route.params.id as string;
 const settingsActive = ref(false);
 const movieSearchActive = ref(false);
 const toggleSettings = () => settingsActive.value = !settingsActive.value
@@ -11,47 +15,65 @@ const toggleMovieSearch = () => movieSearchActive.value = !movieSearchActive.val
 
 const selectedMovie = ref<Movie | null>(null);
 
-const list: List = {
-  id: 1,
-  name: 'List Name',
-  isPublic: true,
-  listSettings: {
-    listName: 'List Name',
-    isPublic: true,
-    collaborators: [],
-    roles: []
-  }
-};
+const {data: list} = await useApiData<MovieList>(`/api/movielists/${movieListId}`);
+
+const updateList = (updatedList: MovieList) => {
+  list.value = updatedList;
+}
+
+const removeMovieFromList = (movieId: number) => {
+  $api<MovieList>(`/api/movielists/${list.value.id}/movies/${movieId}`, {
+    method: "DELETE"
+  }).then((data) => {
+    selectedMovie.value = null;
+    list.value = data;
+  }).catch((error) => {
+    alert(error.message)
+  });
+}
+///const list: MovieList = {
+///  id: 1,
+///  name: 'MovieList Name',
+///  isPublic: true,
+///  listSettings: {
+///    listName: 'MovieList Name',
+///    isPublic: true,
+///    collaborators: [],
+///    roles: []
+///  }
+///};
 
 const movies: Movie[] = []
 </script>
 
 <template>
-  <div class="page-header">
-    <PageTitle title="List Name"/>
-    <Icon class="settings-icon" name="solar:settings-bold" @click="toggleSettings"/>
+  <div v-if="list">
+    <div class="page-header">
+      <PageTitle :title="list.name"/>
+      <Icon class="settings-icon" name="solar:settings-bold" @click="toggleSettings"/>
+    </div>
+
+    <ListSettings
+        v-if="settingsActive"
+        :list="list"
+        v-on:back-to-list="toggleSettings"
+    />
+
+    <MovieList
+        v-else
+        :movies="list.movies"
+        @movie-clicked="selectedMovie = $event"
+        @add-movie="toggleMovieSearch"
+    />
   </div>
 
-  <ListSettings
-      v-if="settingsActive"
-      :list="list"
-      v-on:back-to-list="toggleSettings"
-  />
-
-  <MovieList
-      v-else
-      :movies="movies"
-      @movie-clicked="selectedMovie = $event"
-      @add-movie="toggleMovieSearch"
-  />
-
   <SlideoutPanel :open="!!selectedMovie" @close="selectedMovie = null">
-    <MovieDetails v-if="selectedMovie" :selectedMovie="selectedMovie"/>
+    <MovieDetails v-if="selectedMovie" :selectedMovie="selectedMovie" @remove-movie="removeMovieFromList"/>
   </SlideoutPanel>
 
-  <SlideoutPanel :open="movieSearchActive" class="movie-search-panel"
+  <SlideoutPanel :open="movieSearchActive"
                  @close="movieSearchActive = false">
-    <p>Movie Search</p>
+    <MovieSearch v-if="movieListId" :movie-list-id="movieListId" @add-movie="updateList"/>
   </SlideoutPanel>
 
 </template>

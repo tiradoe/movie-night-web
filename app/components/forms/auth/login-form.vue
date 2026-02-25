@@ -23,6 +23,14 @@ const handleLogin = () => login(email.value, password.value)
 </template>
 
 <style scoped>
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

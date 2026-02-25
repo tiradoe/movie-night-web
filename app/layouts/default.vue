@@ -16,4 +16,10 @@
   max-width: 1280px;
 }
 
+@media (max-width: 740px) {
+  .container {
+    padding: 0.5rem;
+  }
+}
+
 </style>

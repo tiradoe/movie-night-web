@@ -13,9 +13,6 @@ const createList = () => {
     listName.value = "";
     refreshLists();
   }).catch((error) => {
-    if (error.response?.status === 401) {
-      useAuth().logout();
-    }
     alert(error.message)
   });
 }
@@ -23,11 +20,11 @@ const createList = () => {
 
 <template>
   <form @submit.prevent="createList">
-    <label for="list_name">Add List</label>
+    <label for="list_name">Add MovieList</label>
     <div>
       <input v-model="listName"
              name="list_name"
-             placeholder="List Name"
+             placeholder="MovieList Name"
              type="text">
       <button>Add</button>
     </div>
