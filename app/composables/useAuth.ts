@@ -1,6 +1,5 @@
 export const useAuth = () => {
     const config = useRuntimeConfig()
-    const router = useRouter()
 
     const login = async (email: string, password: string) => {
         await $fetch('/sanctum/csrf-cookie', {
@@ -8,12 +7,12 @@ export const useAuth = () => {
             credentials: 'include',
         })
         await $api('/api/login', {method: 'POST', body: {email, password}})
-        await router.push('/')
+        await navigateTo('/')
     }
 
     const logout = async () => {
         await $api('/api/logout', {method: 'POST'})
-        await router.push('/')
+        await navigateTo('/auth/login')
     }
 
     return {login, logout}

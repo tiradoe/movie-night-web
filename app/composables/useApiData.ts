@@ -16,6 +16,11 @@ export const useApiData = <T>(
             ...requestHeaders,
             ...(xsrfToken.value ? {'X-XSRF-TOKEN': xsrfToken.value} : {}),
         })),
+        onResponseError({response}) {
+            if (response.status === 401) {
+                navigateTo('/auth/login')
+            }
+        },
         ...options,
     })
 }

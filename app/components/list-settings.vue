@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import type {List} from "~/types/list";
-import {type ListSettings} from "~/types/list-settings";
+import type {MovieList} from "~/types/movie-list";
+import {type MovieListSettings} from "~/types/movie-list-settings";
 
 const emit = defineEmits(['back-to-list'])
 const props = defineProps<{
-  list: List
+  list: MovieList
 }>()
 
-const listSettings: ListSettings = {
-  listName: 'My List',
+const listSettings: MovieListSettings = {
+  listName: 'My MovieList',
   isPublic: true,
   collaborators: [
     {id: 1, name: 'Ed', role: 3},
@@ -26,13 +26,13 @@ const listSettings: ListSettings = {
   <div class="settings-header">
     <div @click="$emit('back-to-list')">
       <Icon name="solar:arrow-left-linear"/>
-      <span>Back to List</span>
+      <span>Back to MovieList</span>
     </div>
   </div>
 
   <ul class="settings-list">
     <li class="list-setting">
-      <label for="list-name-input">List Name</label>
+      <label for="list-name-input">MovieList Name</label>
 
       <div>
         <input id="list-name-input" :value="listSettings.listName" type="text"/>
@@ -79,7 +79,7 @@ const listSettings: ListSettings = {
       <textarea name="invite-collaborators-input" type="text"></textarea>
     </li>
     <li class="list-setting">
-      <label for="delete-list-button">Delete List</label>
+      <label for="delete-list-button">Delete MovieList</label>
       <button name="delete-list-button">Delete</button>
     </li>
   </ul>

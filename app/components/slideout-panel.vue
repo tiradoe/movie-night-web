@@ -9,16 +9,18 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Transition name="slideout-backdrop">
-    <div v-if="open" class="backdrop" @click="emit('close')"/>
-  </Transition>
+  <Teleport to="body">
+    <Transition name="slideout-backdrop">
+      <div v-if="open" class="backdrop" @click="emit('close')"/>
+    </Transition>
 
-  <Transition name="slideout">
-    <div v-if="open" class="panel">
-      <button class="close-button" @click="emit('close')">&times;</button>
-      <slot/>
-    </div>
-  </Transition>
+    <Transition name="slideout">
+      <div v-if="open" class="panel">
+        <button class="close-button" @click="emit('close')">&times;</button>
+        <slot/>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -34,7 +36,7 @@ const emit = defineEmits<{
   top: 0;
   right: 0;
   bottom: 0;
-  width: 400px;
+  width: 40%;
   background: var(--color-surface, #fff);
   z-index: 101;
   overflow-y: auto;
@@ -57,7 +59,10 @@ const emit = defineEmits<{
 
 @media (max-width: 767px) {
   .panel {
-    width: 100%;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    padding: 0.5rem;
   }
 }
 
