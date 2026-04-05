@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1rem;
+  flex-direction: column;
+  gap: 3rem;
 }
 </style>

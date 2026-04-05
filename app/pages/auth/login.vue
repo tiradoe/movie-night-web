@@ -7,10 +7,21 @@ definePageMeta({
 </script>
 
 <template>
-  <login-form/>
+  <div class="content">
+    <h1>Log in</h1>
+    <login-form/>
+  </div>
 
 </template>
 
 <style scoped>
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 2rem;
+}
 
 </style>

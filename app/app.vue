@@ -14,6 +14,13 @@ body {
   background-color: #f5f5f5;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
 /* sm */
 @media (min-width: 640px) {
 }

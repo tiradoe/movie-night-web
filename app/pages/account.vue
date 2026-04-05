@@ -6,22 +6,24 @@ import ProfileForm from "~/components/forms/profile-form.vue";
 </script>
 
 <template>
-  <PageTitle title="Account Settings"/>
+  <div>
+    <PageTitle title="Account Settings"/>
 
-  <div class="password-settings settings-section">
-    <h2>Reset Password</h2>
-    <PasswordResetForm/>
+    <div class="password-settings settings-section">
+      <h2>Reset Password</h2>
+      <PasswordResetForm/>
 
 
-  </div>
-
-  <div class="profile-settings settings-section">
-    <div class="profile-header">
-      <h2>Profile</h2>
-      <span class="public-profile-link">View Public Profile</span>
     </div>
 
-    <ProfileForm/>
+    <div class="profile-settings settings-section">
+      <div class="profile-header">
+        <h2>Profile</h2>
+        <span class="public-profile-link">View Public Profile</span>
+      </div>
+
+      <ProfileForm/>
+    </div>
   </div>
 
 </template>

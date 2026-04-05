@@ -11,8 +11,10 @@
 
 <style scoped>
 .card {
-  padding: 1rem;
+  padding: 2rem;
   background-color: lightgray;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
 }
 
 </style>

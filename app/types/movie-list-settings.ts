@@ -1,9 +1,9 @@
-import type {Collaborator} from "~/types/collaborator";
+import type {User} from "~/types/user";
 import type {Role} from "~/types/role";
 
 export type MovieListSettings = {
     listName: string,
     isPublic: boolean,
-    collaborators: Collaborator[],
+    collaborators: User[],
     roles: Role[]
 }

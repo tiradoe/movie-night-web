@@ -1,11 +1,13 @@
-import {type MovieListSettings} from "~/types/movie-list-settings";
 import type {Movie} from "~/types/movie";
+import type {User} from "~/types/user";
 
 export type MovieList = {
-    id: number,
+    id: number
     name: string
     is_public: boolean
-    movieListSettings: MovieListSettings
+    owner: string
+    role: string
     movies: Movie[]
+    collaborators: User[]
 }
 
