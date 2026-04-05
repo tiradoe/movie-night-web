@@ -1,6 +1,12 @@
 export default defineNuxtRouteMiddleware((to) => {
-    const publicRoutes = ['/auth/login']
-    if (publicRoutes.includes(to.path)) return
+    const publicRoutes = [
+        'auth-login',
+        'auth-register',
+        'auth-reset-password',
+        'invitations-token-accept',
+        'invitations-token-decline',
+    ]
+    if (publicRoutes.includes(String(to.name))) return
 
     const xsrfToken = useCookie('XSRF-TOKEN')
     if (!xsrfToken.value) {

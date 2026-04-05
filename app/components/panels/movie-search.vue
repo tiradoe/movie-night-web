@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type {MovieSearchResult} from "~/types/movie-search-results";
 import type {MovieList} from "~/types/movie-list";
+import type {ResourceResponse} from "~/types/api";
 
 const emit = defineEmits(['add-movie']);
 const props = defineProps<{
@@ -21,13 +22,13 @@ const searchMovies = () => {
 }
 
 const addMovieToList = (movie: MovieSearchResult) => {
-  $api<MovieList>(`/api/movielists/${props.movieListId}/movies`, {
+  $api<ResourceResponse<MovieList>>(`/api/movielists/${props.movieListId}/movies`, {
     body: {
       movie: movie
     },
     method: "POST"
   }).then((list) => {
-    emit('add-movie', list);
+    emit('add-movie', list.data);
   }).catch((error) => {
     alert(error.message)
   });
@@ -89,7 +90,7 @@ const addMovieToList = (movie: MovieSearchResult) => {
 
 .movie-result img {
   height: 10rem;
-  max-width: 7rem;
+  width: 10rem;
 }
 
 </style>

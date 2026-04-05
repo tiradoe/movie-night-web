@@ -6,9 +6,8 @@ const welcomeMessage = computed(() => `Welcome, ${user}!`)
 </script>
 
 <template>
-  <PageTitle :title="welcomeMessage"/>
-
   <div class="content">
+    <PageTitle :title="welcomeMessage"/>
     <div>
       <h2>Next up</h2>
       <span>Nothing Scheduled :(</span>

@@ -4,6 +4,7 @@ import {type Movie} from "~/types/movie";
 import {type MovieList} from "~/types/movie-list";
 import MovieDetails from "~/components/panels/movie-details.vue";
 import MovieSearch from "~/components/panels/movie-search.vue";
+import type {ResourceResponse} from "~/types/api";
 
 const route = useRoute();
 
@@ -15,65 +16,78 @@ const toggleMovieSearch = () => movieSearchActive.value = !movieSearchActive.val
 
 const selectedMovie = ref<Movie | null>(null);
 
-const {data: list} = await useApiData<MovieList>(`/api/movielists/${movieListId}`);
+const {data: listResponse} = await useApiData<ResourceResponse<MovieList>>(`/api/movielists/${movieListId}`, {
+  onResponseError: (error) => {
+    if (error.response.status === 401) {
+      navigateTo('/auth/login')
+    }
+
+    if (error.response.status === 403 || error.response.status === 404) {
+      navigateTo('/lists')
+    }
+  }
+});
+
+const refreshList = (updatedList: MovieList) => {
+  listResponse.value = {data: updatedList};
+}
 
 const updateList = (updatedList: MovieList) => {
-  list.value = updatedList;
+  $api<ResourceResponse<MovieList>>(`/api/movielists/${route.params.id}`, {
+    method: "PUT",
+    body: updatedList
+  }).then((response) => {
+    listResponse.value = {data: response.data};
+  }).catch((error) => {
+    alert(error.message)
+  });
+
 }
 
 const removeMovieFromList = (movieId: number) => {
-  $api<MovieList>(`/api/movielists/${list.value.id}/movies/${movieId}`, {
+  $api<ResourceResponse<MovieList>>(`/api/movielists/${listResponse.value.data.id}/movies/${movieId}`, {
     method: "DELETE"
-  }).then((data) => {
+  }).then((response) => {
     selectedMovie.value = null;
-    list.value = data;
+    listResponse.value.data = response.data;
   }).catch((error) => {
     alert(error.message)
   });
 }
-///const list: MovieList = {
-///  id: 1,
-///  name: 'MovieList Name',
-///  isPublic: true,
-///  listSettings: {
-///    listName: 'MovieList Name',
-///    isPublic: true,
-///    collaborators: [],
-///    roles: []
-///  }
-///};
 
-const movies: Movie[] = []
 </script>
 
 <template>
-  <div v-if="list">
+  <div v-if="listResponse" class="content">
     <div class="page-header">
-      <PageTitle :title="list.name"/>
+      <PageTitle :title="listResponse.data.name"/>
       <Icon class="settings-icon" name="solar:settings-bold" @click="toggleSettings"/>
     </div>
 
     <ListSettings
         v-if="settingsActive"
-        :list="list"
-        v-on:back-to-list="toggleSettings"
+        :list="listResponse.data"
+        @back-to-list="toggleSettings"
+        @update-list="updateList"
     />
 
     <MovieList
         v-else
-        :movies="list.movies"
+        :movies="listResponse.data.movies"
         @movie-clicked="selectedMovie = $event"
         @add-movie="toggleMovieSearch"
     />
   </div>
 
+  <!-- MOVIE DETAILS SLIDEOUT -->
   <SlideoutPanel :open="!!selectedMovie" @close="selectedMovie = null">
     <MovieDetails v-if="selectedMovie" :selectedMovie="selectedMovie" @remove-movie="removeMovieFromList"/>
   </SlideoutPanel>
 
+  <!-- MOVIE SEARCH SLIDEOUT -->
   <SlideoutPanel :open="movieSearchActive"
                  @close="movieSearchActive = false">
-    <MovieSearch v-if="movieListId" :movie-list-id="movieListId" @add-movie="updateList"/>
+    <MovieSearch v-if="movieListId" :movie-list-id="movieListId" @add-movie="refreshList"/>
   </SlideoutPanel>
 
 </template>

@@ -2,9 +2,10 @@
 
 import PageTitle from "~/components/common/page-title.vue";
 import CreateListForm from "~/components/forms/create-list-form.vue";
-import type {MovieList} from "~/types/movie-list";
+import Card from "~/components/common/card.vue";
+import type {MovieListGroup} from "~/types/movie-list-group";
 
-const {data: lists, refresh, error} = await useApiData<MovieList[]>("/api/movielists")
+const {data: listGroup, refresh, error} = await useApiData<MovieListGroup>("/api/movielists")
 if (error.value) {
   alert(error.value)
 }
@@ -16,54 +17,62 @@ const refreshLists = () => {
 </script>
 
 <template>
-  <PageTitle title="Lists"/>
-
   <div class="content">
-    <CreateListForm @refreshLists="refreshLists"/>
+    <PageTitle title="Lists"/>
+    <Card class="card">
+      <CreateListForm @refreshLists="refreshLists"/>
 
-    <div class="w-full flex flex-col gap-5">
-      <h2 class="text-2xl font-bold">Your Lists</h2>
-      <ul class="movie-list">
-        <li v-for="list in lists"
-            :key="list.id"
-        >
-          <NuxtLink :to="`/lists/${list.id}`" class="movielist-details">
-            <span>{{ list.name }}</span>
-            <span>{{ list.is_public ? 'Public' : 'Private' }}</span>
-          </NuxtLink>
-        </li>
-      </ul>
-    </div>
+      <div class="w-full flex flex-col gap-5">
+        <h2 class="text-2xl font-bold">Your Lists</h2>
+        <span v-if="!listGroup?.movie_lists?.length" class="not-found-message">No lists found.</span>
+        <ul v-else class="movie-list">
+          <li v-for="list in listGroup?.movie_lists"
+              :key="list.id"
+          >
+            <NuxtLink :to="`/lists/${list.id}`" class="movielist-details">
+              <span>{{ list.name }}</span>
+              <span>{{ list.is_public ? 'Public' : 'Private' }}</span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
 
-    <!-- <div class="w-full flex flex-col gap-5">
-      <h2 class="text-2xl font-bold">Shared With You</h2>
-      <ul class="w-full flex flex-col gap-3">
-        <li class="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition-colors">
-          <NuxtLink to="lists/2">Bob's MovieList</NuxtLink>
-        </li>
-      </ul>
-    </div>
-    -->
+      <div class="w-full flex flex-col gap-5">
+        <h2 class="text-2xl font-bold">Shared With You</h2>
+        <span v-if="!listGroup?.shared_lists?.length" class="not-found-message">No shared lists found.</span>
+        <ul v-else class="movie-list">
+          <li v-for="list in listGroup?.shared_lists"
+              :key="list.id"
+          >
+            <NuxtLink :to="`/lists/${list.id}`" class="movielist-details">
+              <span>{{ list.name }}</span>
+              <span>{{ list.is_public ? 'Public' : 'Private' }}</span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </Card>
   </div>
 
 </template>
 
 <style scoped>
-.content {
+.card {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .movie-list {
   display: grid;
-  gap: 1rem;
 }
 
 .movie-list li {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  margin: 0 -1rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
 .movielist-details {
@@ -75,8 +84,11 @@ const refreshLists = () => {
 
 .movie-list li:hover {
   background-color: #eee;
-  padding: 1rem 0;
-  border-radius: 0.5rem;
+}
+
+.not-found-message {
+  display: block;
+  padding: 1em 0;
 }
 
 </style>

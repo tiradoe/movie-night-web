@@ -1,5 +1,7 @@
+import type {MovieCriticScore} from "~/types/movie-critic-score";
+
 export type Movie = {
-    id: number,
+    id: number
     title: string
     year: number
     imdb_id: string
@@ -8,7 +10,7 @@ export type Movie = {
     plot: string
     genre: string
     mpaa_rating: string
-    critic_scores: string
+    critic_scores: Array<MovieCriticScore>
     poster: string
     added_by: number
 }

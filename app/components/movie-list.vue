@@ -16,12 +16,11 @@ const emit = defineEmits<{
   'add-movie': []
 }>()
 
-const filteredMovies = ref<Movie[]>(props.movies);
 const searchQuery = ref('');
 const imageErrors = ref<Set<number>>(new Set());
 const sortMenuOpen = ref(false);
 const sortMenuRef = ref<HTMLElement | null>(null);
-const currentSort = ref<SortOption | null>(null);
+const currentSort = ref<SortOption>({field: 'title', direction: 'asc'});
 
 const sortMovies = (movies: Movie[]): Movie[] => {
   if (!currentSort.value) return movies;
@@ -41,6 +40,8 @@ const sortMovies = (movies: Movie[]): Movie[] => {
     return direction === 'asc' ? comparison : -comparison;
   });
 }
+
+const filteredMovies = ref<Movie[]>(sortMovies(props.movies));
 
 const applySort = (field: SortField, direction: SortDirection) => {
   currentSort.value = {field, direction};
@@ -192,7 +193,8 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
 
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(max(140px, 20%), 1fr));
+  /*grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));*/
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
   gap: 1rem;
 }
 
@@ -212,6 +214,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
   object-fit: fill;
   width: 100%;
   height: 100%;
+  max-height: 25rem;
 }
 
 .movie img.movie-poster-error {

@@ -21,7 +21,7 @@ const createList = () => {
 <template>
   <form @submit.prevent="createList">
     <label for="list_name">Add MovieList</label>
-    <div>
+    <div class="form-group">
       <input v-model="listName"
              name="list_name"
              placeholder="MovieList Name"
@@ -31,6 +31,13 @@ const createList = () => {
   </form>
 </template>
 <style scoped>
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 button {
   background-color: #4caf50;
   color: white;
@@ -44,6 +51,10 @@ input {
   border: 1px solid #ccc;
   border-right: none;
   border-radius: 4px 0 0 4px;
+}
+
+label {
+  font-weight: bold;
 }
 
 </style>

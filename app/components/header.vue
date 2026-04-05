@@ -28,7 +28,6 @@
   gap: 1rem;
   font: bold 1.5rem sans-serif;
   justify-content: center;
-  margin-bottom: 2rem;
 }
 
 .links {

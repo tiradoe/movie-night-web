@@ -10,13 +10,12 @@ const props = defineProps<{
 const emit = defineEmits(['remove-movie']);
 
 const criticScores = computed(() => {
-  const scores = JSON.parse(props.selectedMovie.critic_scores)
-  const parsedScores: MovieCriticScore[] = []
-  scores.map((score: MovieCriticScore) => {
-    parsedScores.push({Value: score.Value, Source: score.Source})
+  const scores: MovieCriticScore[] = []
+  props.selectedMovie.critic_scores.map((score: MovieCriticScore) => {
+    scores.push({Value: score.Value, Source: score.Source})
   })
 
-  return parsedScores
+  return scores
 })
 </script>
 
@@ -49,10 +48,11 @@ const criticScores = computed(() => {
       </div>
       <div class="movie-detail">
         <dt class="detail-title">Critic Scores:</dt>
-        <div v-for="score in criticScores" :key="score.Source">
+        <div v-for="score in criticScores" v-if="criticScores && criticScores.length > 0" :key="score.Source">
           <dd class="critic-score-source">{{ score.Source }}</dd>
           <dd>{{ score.Value }}</dd>
         </div>
+        <dd v-else>No critic scores available</dd>
       </div>
     </dl>
 
@@ -84,7 +84,8 @@ dt {
 }
 
 .movie-details img {
-  max-width: 15em;
+  max-width: 20em;
+  max-height: 25em;
   margin: 2rem auto;
 }
 
@@ -96,6 +97,7 @@ dt {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin: 2em 0;
 }
 
 

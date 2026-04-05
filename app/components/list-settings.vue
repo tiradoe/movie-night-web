@@ -1,91 +1,123 @@
 <script lang="ts" setup>
 import type {MovieList} from "~/types/movie-list";
-import {type MovieListSettings} from "~/types/movie-list-settings";
+import Card from "~/components/common/card.vue";
 
-const emit = defineEmits(['back-to-list'])
+const emit = defineEmits(['back-to-list', 'update-list'])
 const props = defineProps<{
   list: MovieList
 }>()
 
-const listSettings: MovieListSettings = {
-  listName: 'My MovieList',
-  isPublic: true,
-  collaborators: [
-    {id: 1, name: 'Ed', role: 3},
-    {id: 2, name: 'Bob', role: 2}
-  ],
-  roles: [
-    {id: 1, name: 'Viewer'},
-    {id: 2, name: 'Editor'},
-    {id: 3, name: 'Admin'}
-  ]
+const localName = ref(props.list.name)
+
+const availableRoles = [
+  {id: 1, name: 'viewer'},
+  {id: 2, name: 'editor'},
+  {id: 3, name: 'admin'}
+]
+
+const collaboratorInvites = ref("");
+const responseMessage = ref("");
+type BasicResponse = {
+  message: string
+}
+const sendInvites = () => {
+  $api<BasicResponse>(`/api/invitations/`, {
+    method: 'POST',
+    body: {
+      emails: collaboratorInvites.value.split(',').map(email => email.trim()),
+      movie_list_id: props.list.id
+    }
+  }).then((response) => {
+    collaboratorInvites.value = "";
+    responseMessage.value = response.message;
+  })
+}
+
+const deleteList = () => {
+  if (!confirm("Are you sure you want to delete this list?")) return
+
+  $api(`/api/movielists/${props.list.id}`, {
+    method: 'DELETE',
+  }).then(() => {
+    navigateTo('/lists')
+  })
 }
 </script>
 
 <template>
-  <div class="settings-header">
-    <div @click="$emit('back-to-list')">
-      <Icon name="solar:arrow-left-linear"/>
-      <span>Back to MovieList</span>
+  <Card>
+    <div class="settings-header">
+      <div @click="$emit('back-to-list')">
+        <Icon name="solar:arrow-left-linear"/>
+        <span class="back-to-list">Back to MovieList</span>
+      </div>
     </div>
-  </div>
 
-  <ul class="settings-list">
-    <li class="list-setting">
-      <label for="list-name-input">MovieList Name</label>
+    <ul class="settings-list">
+      <li class="list-setting">
+        <label for="list-name-input">MovieList Name</label>
 
-      <div>
-        <input id="list-name-input" :value="listSettings.listName" type="text"/>
-        <button>Save</button>
-      </div>
-    </li>
-    <li class="list-setting">
-      <div>
+        <div>
+          <input id="list-name-input" v-model="localName" type="text"/>
+          <button @click="$emit('update-list', { ...list, name: localName })">Save</button>
+        </div>
+      </li>
+      <li class="list-setting-row">
         <label for="make-list-public">Make list public</label>
-        <input id="make-list-public" :checked="listSettings.isPublic" type="checkbox"/>
-      </div>
-    </li>
-    <li class="list-setting collaborator-list">
-      <span>Collaborators</span>
-      <details>
-        <summary>Permission levels</summary>
+        <input id="make-list-public" :checked="list.is_public" type="checkbox"
+               @change="$emit('update-list', { ...list, is_public: ($event.target as HTMLInputElement).checked })"/>
+      </li>
+      <li class="list-setting collaborator-list">
+        <span>Collaborators</span>
+        <details>
+          <summary>Permission levels</summary>
 
-        <ul>
-          <li>Viewer: Can view the list, but cannot make any changes.</li>
-          <li>Editor: Can add/remove movies from the list.</li>
-          <li>Admin: Can make any changes to the list including deleting it. Can also invite other users to collaborate
-            on
-            this list.
+          <ul>
+            <li>Viewer: Can view the list, but cannot make any changes.</li>
+            <li>Editor: Can add/remove movies from the list.</li>
+            <li>Admin: Can make any changes to the list including deleting it. Can also invite other users to
+              collaborate
+              on
+              this list.
+            </li>
+          </ul>
+        </details>
+
+        <ul class="collaborators">
+          <li v-for="collaborator in list.collaborators" :key="collaborator.id">
+            <span>{{ collaborator.username }}</span>
+            <select v-model="collaborator.role">
+              <option
+                  v-for="role in availableRoles"
+                  :value="role.name"
+              >
+                {{ role.name }}
+              </option>
+            </select>
           </li>
         </ul>
-      </details>
-
-      <ul class="collaborators">
-        <li v-for="collaborator in listSettings.collaborators" :key="collaborator.id">
-          <span>{{ collaborator.name }}</span>
-          <select v-model="collaborator.role">
-            <option
-                v-for="role in listSettings.roles"
-                :value="role.id"
-            >
-              {{ role.name }}
-            </option>
-          </select>
-        </li>
-      </ul>
-    </li>
-    <li class="list-setting">
-      <label for="invite-collaborators-input">Invite Collaborators</label>
-      <textarea name="invite-collaborators-input" type="text"></textarea>
-    </li>
-    <li class="list-setting">
-      <label for="delete-list-button">Delete MovieList</label>
-      <button name="delete-list-button">Delete</button>
-    </li>
-  </ul>
+      </li>
+      <li class="list-setting">
+        <form class="list-setting" @submit.prevent="sendInvites">
+          <label for="invite-collaborators-input">Invite Collaborators</label>
+          <textarea v-model="collaboratorInvites" name="invite-collaborators-input" type="text"></textarea>
+          <button>Send Invites</button>
+          <span v-if="responseMessage">{{ responseMessage }}</span>
+        </form>
+      </li>
+      <li class="list-setting">
+        <label for="delete-list-button">Delete MovieList</label>
+        <button name="delete-list-button" @click="deleteList">Delete</button>
+      </li>
+    </ul>
+  </Card>
 </template>
 
 <style scoped>
+.back-to-list:hover {
+  text-decoration: underline;
+}
+
 .collaborator-list {
   gap: 1rem;
 }
@@ -101,10 +133,15 @@ const listSettings: MovieListSettings = {
   gap: 1rem;
 }
 
+.list-setting-row {
+  display: flex;
+  gap: 1rem;
+}
+
 .settings-header {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding-bottom: 1rem;
   cursor: pointer;
 }
 
@@ -121,7 +158,7 @@ const listSettings: MovieListSettings = {
 
 .settings-list > li {
   display: flex;
-  border: gray 1px solid;
+  border: rgba(0, 0, 0, 0.2) 1px solid;
   padding: 1rem;
 }
 

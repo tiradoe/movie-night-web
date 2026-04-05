@@ -13,8 +13,8 @@ export const $api = <T>(
             ...(xsrfToken.value ? {'X-XSRF-TOKEN': xsrfToken.value} : {}),
         },
         onResponseError({response}) {
-            if (response.status === 401) {
-                navigateTo('/auth/login')
+            if (response.status === 401 || response.status === 419) {
+                useAuth().logout()
             }
         },
         ...options,
