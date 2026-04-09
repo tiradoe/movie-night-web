@@ -10,12 +10,22 @@ const handleLogin = () => login(email.value, password.value)
   <form class="password-form" @submit.prevent="handleLogin">
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" v-model="email" type="email"/>
+      <input
+          id="email"
+          v-model="email"
+          autocomplete="email"
+          type="email"
+      />
     </div>
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" v-model="password" type="password"/>
+      <input
+          id="password"
+          v-model="password"
+          autocomplete="current-password"
+          type="password"
+      />
     </div>
 
     <button type="submit">Submit</button>

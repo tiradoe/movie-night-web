@@ -17,4 +17,10 @@
   border-radius: 0.5rem;
 }
 
+@media (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+}
+
 </style>

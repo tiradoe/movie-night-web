@@ -194,7 +194,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
 .movie-list {
   display: grid;
   /*grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));*/
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(14em, 1fr));
   gap: 1rem;
 }
 
@@ -251,7 +251,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
 
   .list-controls {
     width: 100%;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     padding-bottom: 1rem;
   }
 
