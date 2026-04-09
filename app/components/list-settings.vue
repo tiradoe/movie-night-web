@@ -86,7 +86,8 @@ const deleteList = () => {
           </ul>
         </details>
 
-        <ul class="collaborators">
+        <div v-if="!list.collaborators.length">No collaborators found</div>
+        <ul v-else class="collaborators">
           <li v-for="collaborator in list.collaborators" :key="collaborator.id">
             <span>{{ collaborator.username }}</span>
             <select v-model="collaborator.role">
