@@ -7,7 +7,16 @@ export default defineNuxtConfig({
         },
     },
     devtools: {enabled: true},
-    css: ['~/assets/css/reset.css'],
+    css: [
+        '~/assets/css/reset.css',
+        '~/assets/css/variables.css',
+    ],
+    fonts: {
+        families: [
+            {name: 'Lato', provider: 'bunny'},
+            {name: 'Ubuntu', provider: 'bunny'},
+        ]
+    },
     modules: [
         '@nuxt/eslint',
         '@nuxt/fonts',

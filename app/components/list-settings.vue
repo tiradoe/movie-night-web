@@ -2,19 +2,16 @@
 import type {MovieList} from "~/types/movie-list";
 import Card from "~/components/common/card.vue";
 import InputAction from "~/components/common/input-action.vue";
+import type {Role} from "~/types/role";
+import type {ResourceResponse} from "~/types/api";
+import type {User} from "~/types/user";
 
-defineEmits(['back-to-list', 'update-list'])
+const emits = defineEmits(['back-to-list', 'update-list'])
 const props = defineProps<{
   list: MovieList
 }>()
 
 const localName = ref(props.list.name)
-
-const availableRoles = [
-  {id: 1, name: 'viewer'},
-  {id: 2, name: 'editor'},
-  {id: 3, name: 'admin'}
-]
 
 const collaboratorInvites = ref("");
 const responseMessage = ref("");
@@ -34,6 +31,17 @@ const sendInvites = () => {
   })
 }
 
+const updateCollaboratorRole = (collaborator: User) => {
+  $api<ResourceResponse<MovieList>>(`/api/movielists/${props.list.id}/collaborators/${collaborator.id}/`, {
+    method: 'PATCH',
+    body: {
+      role_id: collaborator.role
+    }
+  }).then((response) => {
+    emits('update-list', response.data)
+  })
+}
+
 const deleteList = () => {
   if (!confirm("Are you sure you want to delete this list?")) return
 
@@ -43,6 +51,20 @@ const deleteList = () => {
     navigateTo('/lists')
   })
 }
+
+const roles = ref<Role[]>([])
+
+const getRoles = () => {
+  return $api<ResourceResponse<Role[]>>(`/api/roles`, {
+    method: 'GET'
+  }).then((response) => {
+    roles.value = response.data
+  }).catch((error) => {
+    alert(error.message)
+  })
+}
+
+getRoles()
 </script>
 
 <template>
@@ -74,28 +96,23 @@ const deleteList = () => {
         <span>Collaborators</span>
         <details>
           <summary>Permission levels</summary>
-
           <ul>
-            <li>Viewer: Can view the list, but cannot make any changes.</li>
-            <li>Editor: Can add/remove movies from the list.</li>
-            <li>Admin: Can make any changes to the list including deleting it. Can also invite other users to
-              collaborate
-              on
-              this list.
+            <li v-for="role in roles">
+              {{ role.display_name }}: {{ role.description }}
             </li>
           </ul>
         </details>
 
-        <div v-if="!list.collaborators.length">No collaborators found</div>
+        <div v-if="!list.collaborators?.length">No collaborators found</div>
         <ul v-else class="collaborators">
           <li v-for="collaborator in list.collaborators" :key="collaborator.id">
             <span>{{ collaborator.username }}</span>
-            <select v-model="collaborator.role">
+            <select v-model="collaborator.role" @change="updateCollaboratorRole(collaborator)">
               <option
-                  v-for="role in availableRoles"
-                  :value="role.name"
+                  v-for="role in roles"
+                  :value="role.id"
               >
-                {{ role.name }}
+                {{ role.display_name }}
               </option>
             </select>
           </li>
