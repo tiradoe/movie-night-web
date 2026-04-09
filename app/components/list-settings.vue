@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type {MovieList} from "~/types/movie-list";
 import Card from "~/components/common/card.vue";
+import InputAction from "~/components/common/input-action.vue";
 
-const emit = defineEmits(['back-to-list', 'update-list'])
+defineEmits(['back-to-list', 'update-list'])
 const props = defineProps<{
   list: MovieList
 }>()
@@ -45,7 +46,7 @@ const deleteList = () => {
 </script>
 
 <template>
-  <Card>
+  <Card class="card">
     <div class="settings-header">
       <div @click="$emit('back-to-list')">
         <Icon name="solar:arrow-left-linear"/>
@@ -56,11 +57,13 @@ const deleteList = () => {
     <ul class="settings-list">
       <li class="list-setting">
         <label for="list-name-input">MovieList Name</label>
-
-        <div>
-          <input id="list-name-input" v-model="localName" type="text"/>
-          <button @click="$emit('update-list', { ...list, name: localName })">Save</button>
-        </div>
+        <InputAction
+            v-model="localName"
+            buttonText="Save"
+            inputName="list-name-input"
+            placeholder="List Name"
+            @action="$emit('update-list', { ...list, name: localName })"
+        />
       </li>
       <li class="list-setting-row">
         <label for="make-list-public">Make list public</label>
@@ -170,4 +173,6 @@ details ul > li {
 details ul > li:not(:last-child) {
   border-bottom: none;
 }
+
+
 </style>

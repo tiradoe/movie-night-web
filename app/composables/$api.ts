@@ -14,7 +14,8 @@ export const $api = <T>(
         },
         onResponseError({response}) {
             if (response.status === 401 || response.status === 419) {
-                useAuth().logout()
+                useCookie('XSRF-TOKEN').value = ''
+                navigateTo('/auth/login')
             }
         },
         ...options,

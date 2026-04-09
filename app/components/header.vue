@@ -1,3 +1,5 @@
+<script lang="ts" setup>
+</script>
 <template>
   <nav class="header">
     <span class="logo">
@@ -28,6 +30,9 @@
   gap: 1rem;
   font: bold 1.5rem sans-serif;
   justify-content: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 1rem 0;
 }
 
 .links {

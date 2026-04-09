@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type {MovieSearchResult} from "~/types/movie-search-results";
 import type {MovieList} from "~/types/movie-list";
-import type {ResourceResponse} from "~/types/api";
+import type {ResourceResponse} from "@/types/api";
 
 const emit = defineEmits(['add-movie']);
 const props = defineProps<{
@@ -12,10 +12,10 @@ const searchQuery = ref("");
 
 const movies = ref<MovieSearchResult[]>([]);
 const searchMovies = () => {
-  $api<MovieSearchResult[]>(`/api/movies/search/${searchQuery.value}`, {
+  $api<ResourceResponse<MovieSearchResult[]>>(`/api/movies/search/${searchQuery.value}`, {
     method: "GET"
-  }).then((data) => {
-    movies.value = data.results
+  }).then((response) => {
+    movies.value = response.data
   }).catch((error) => {
     alert(error.message)
   });
