@@ -7,7 +7,7 @@ export const useAuth = () => {
             credentials: 'include',
         })
         await $api('/api/login', {method: 'POST', body: {email, password}})
-        await navigateTo('/')
+        await navigateTo('/lists')
     }
 
     const register = async (email: string, username: string) => {

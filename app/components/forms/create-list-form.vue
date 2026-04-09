@@ -36,6 +36,7 @@ const createList = () => {
 form {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 
