@@ -3,7 +3,7 @@
 <template>
   <nav class="header">
     <span class="logo">
-      <NuxtLink to="/">
+      <NuxtLink to="/lists">
       Movie Night
       </NuxtLink>
     </span>
