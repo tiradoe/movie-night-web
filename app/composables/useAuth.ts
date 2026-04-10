@@ -6,7 +6,16 @@ export const useAuth = () => {
             baseURL: config.public.apiBase,
             credentials: 'include',
         })
-        await $api('/api/login', {method: 'POST', body: {email, password}})
+        await $api('/api/login', {
+                method: 'POST',
+                onResponseError({response}) {
+                    if (response.status === 401) {
+                        throw new Error('INVALID_CREDENTIALS')
+                    }
+                },
+                body: {email, password}
+            }
+        )
         window.location.href = '/lists'
     }
 
@@ -15,7 +24,16 @@ export const useAuth = () => {
             baseURL: config.public.apiBase,
             credentials: 'include',
         })
-        await $api('/api/register', {method: 'POST', body: {email, username}})
+        await $api('/api/register', {
+            method: 'POST',
+            onResponseError({response}) {
+                console.log("wat", response)
+                if (response.status === 422) {
+                    throw new Error(response._data.message)
+                }
+            },
+            body: {email, username}
+        })
         await navigateTo('/auth/login')
     }
 
