@@ -1,9 +1,19 @@
 <script lang="ts" setup>
+import incorrectPasswordGif from '~/assets/img/incorrect-password.gif';
+
 const email = ref("");
 const password = ref("");
 const {login} = useAuth();
 
-const handleLogin = () => login(email.value, password.value)
+const errorMessage = ref("");
+
+const handleLogin = async () => {
+  try {
+    await login(email.value, password.value)
+  } catch (error) {
+    errorMessage.value = "Invalid email or password";
+  }
+}
 </script>
 
 <template>
@@ -29,10 +39,22 @@ const handleLogin = () => login(email.value, password.value)
     </div>
 
     <button type="submit">Submit</button>
+    <div class="error-container">
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <img v-if="errorMessage" :src="incorrectPasswordGif" alt="You didn't say the magic word." class="error-image"
+           height="200" width="300"/>
+    </div>
   </form>
 </template>
 
 <style scoped>
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .password-form {
   display: flex;
   flex-direction: column;
@@ -45,5 +67,10 @@ const handleLogin = () => login(email.value, password.value)
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
 }
 </style>
