@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     ],
     fonts: {
         families: [
-            {name: 'Lato', provider: 'bunny'},
             {name: 'Ubuntu', provider: 'bunny'},
         ]
     },
