@@ -8,7 +8,8 @@ type SortDirection = 'asc' | 'desc'
 type SortOption = { field: SortField, direction: SortDirection }
 
 const props = defineProps<{
-  movies: Movie[]
+  movies: Movie[],
+  canEdit: boolean,
 }>()
 
 const emit = defineEmits<{
@@ -117,7 +118,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
           </ul>
         </div>
       </div>
-      <button class="add-movie-button" @click="emit('add-movie')">Add Movie</button>
+      <button v-if="canEdit" class="add-movie-button" @click="emit('add-movie')">Add Movie</button>
     </div>
     <div v-if="filteredMovies.length === 0" class="movie-quote">
       <span class="quote">"You complete me."</span>
@@ -126,12 +127,13 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
     <ul v-else class="movie-list">
       <li v-for="movie in filteredMovies" :key="movie.id" class="movie" @click="emit('movie-clicked', movie)">
         <div class="movie-poster-container">
-          <img
+          <NuxtImg
               :class="{ 'movie-poster-error': imageErrors.has(movie.id) }"
               :src="movie.poster"
               alt=""
               class="movie-poster"
-              @error="(e) => handleImageError(e, movie.id)"
+              loading="lazy"
+              @error="(e: ErrorEvent) => handleImageError(e, movie.id)"
           />
           <div v-if="imageErrors.has(movie.id)" class="movie-title-overlay">
             {{ movie.title }}

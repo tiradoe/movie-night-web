@@ -5,6 +5,7 @@ import posterPlaceholder from "~/assets/img/poster-placeholder.svg";
 
 const props = defineProps<{
   selectedMovie: Movie;
+  canEdit: boolean;
 }>();
 
 const emit = defineEmits(['remove-movie']);
@@ -56,7 +57,7 @@ const criticScores = computed(() => {
       </div>
     </dl>
 
-    <button type="button" @click="emit('remove-movie', selectedMovie.id)">Remove From List</button>
+    <button v-if="canEdit" type="button" @click="emit('remove-movie', selectedMovie.id)">Remove From List</button>
   </div>
 </template>
 

@@ -24,12 +24,12 @@ const handlePasswordReset = () => {
   <form class="password-form" @submit.prevent="handlePasswordReset">
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" v-model="password" type="password"/>
+      <input id="password" v-model="password" autocomplete="new-password" type="password"/>
     </div>
 
     <div class="form-group">
       <label for="new-password">Confirm Password</label>
-      <input id="confirm-password" v-model="passwordConfirmation" type="password"/>
+      <input id="confirm-password" v-model="passwordConfirmation" autocomplete="new-password" type="password"/>
     </div>
 
     <button type="submit">Submit</button>

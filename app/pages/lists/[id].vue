@@ -28,6 +28,9 @@ const {data: listResponse} = await useApiData<ResourceResponse<MovieList>>(`/api
   }
 });
 
+const isAdmin = computed(() => ['ADMIN', 'OWNER'].includes(listResponse.value.data.role));
+const canEdit = computed(() => listResponse.value.data.role === 'EDITOR' || isAdmin.value);
+
 const refreshList = (updatedList: MovieList) => {
   listResponse.value = {data: updatedList};
 }
@@ -61,7 +64,7 @@ const removeMovieFromList = (movieId: number) => {
   <div v-if="listResponse" class="content">
     <div class="page-header">
       <PageTitle :title="listResponse.data.name"/>
-      <Icon class="settings-icon" name="solar:settings-bold" @click="toggleSettings"/>
+      <Icon v-if="isAdmin" class="settings-icon" name="solar:settings-bold" @click="toggleSettings"/>
     </div>
 
     <ListSettings
@@ -73,6 +76,7 @@ const removeMovieFromList = (movieId: number) => {
 
     <MovieList
         v-else
+        :can-edit="canEdit"
         :movies="listResponse.data.movies"
         @movie-clicked="selectedMovie = $event"
         @add-movie="toggleMovieSearch"
@@ -81,7 +85,8 @@ const removeMovieFromList = (movieId: number) => {
 
   <!-- MOVIE DETAILS SLIDEOUT -->
   <SlideoutPanel :open="!!selectedMovie" @close="selectedMovie = null">
-    <MovieDetails v-if="selectedMovie" :selectedMovie="selectedMovie" @remove-movie="removeMovieFromList"/>
+    <MovieDetails v-if="selectedMovie" :can-edit="canEdit" :selectedMovie="selectedMovie"
+                  @remove-movie="removeMovieFromList"/>
   </SlideoutPanel>
 
   <!-- MOVIE SEARCH SLIDEOUT -->
