@@ -5,7 +5,9 @@
     --result-background: #c4c1d2;
     --panel-background: #f5f5f5;
     --card-background: #c4c1d2;
-    --color-action-button: #4caf50;
+    --color-button-primary: #4caf50;
+    --color-button-warning: #f59e0b;
+    --color-button-danger: #fb3b3b;
     --color-action-button-text: #fff;
-    --color-error-text: red;
+    --color-error-text: #fb3b3b;
 }

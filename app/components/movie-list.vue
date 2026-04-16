@@ -2,6 +2,7 @@
 import {type Movie} from "~/types/movie";
 import posterPlaceholder from "~/assets/img/poster-placeholder.svg";
 import Card from "~/components/common/card.vue";
+import ButtonAction from "~/components/common/button-action.vue";
 
 type SortField = 'title' | 'year'
 type SortDirection = 'asc' | 'desc'
@@ -118,7 +119,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
           </ul>
         </div>
       </div>
-      <button v-if="canEdit" class="add-movie-button" @click="emit('add-movie')">Add Movie</button>
+      <ButtonAction v-if="canEdit" button-text="Add Movie" @action="emit('add-movie')" />
     </div>
     <div v-if="filteredMovies.length === 0" class="movie-quote">
       <span class="quote">"You complete me."</span>
@@ -158,6 +159,12 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.list-controls input {
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
 }
 
 .sort-menu-container {

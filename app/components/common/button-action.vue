@@ -1,20 +1,27 @@
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   buttonText: string
+  buttonColor?: 'primary' | 'warning' | 'danger'
 }>()
+
+const buttonColor = computed(() => props.buttonColor || 'primary')
 
 const emit = defineEmits(['action'])
 </script>
 
 <template>
-  <button @click="emit('action')">{{ buttonText }}</button>
+  <button
+      :style="{ 'background-color': `var(--color-button-${buttonColor})` }"
+      @click="emit('action')"
+  >
+    {{ buttonText }}
+  </button>
 </template>
 
 <style scoped>
 button {
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
-  background-color: var(--color-action-button);
   color: var(--color-action-button-text);
   border: none;
   cursor: pointer;

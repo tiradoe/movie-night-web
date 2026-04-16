@@ -2,6 +2,7 @@
 import type {MovieList} from "~/types/movie-list";
 import Card from "~/components/common/card.vue";
 import InputAction from "~/components/common/input-action.vue";
+import ButtonAction from "~/components/common/button-action.vue";
 import type {Role} from "~/types/role";
 import type {ResourceResponse} from "~/types/api";
 import type {User} from "~/types/user";
@@ -128,13 +129,17 @@ getRoles()
       </li>
       <li class="list-setting">
         <label for="delete-list-button">Delete MovieList</label>
-        <button name="delete-list-button" @click="deleteList">Delete</button>
+        <ButtonAction button-color="danger" button-text="Delete" @action="deleteList"/>
       </li>
     </ul>
   </Card>
 </template>
 
 <style scoped>
+select {
+  padding: 0.5rem;
+}
+
 .back-to-list:hover {
   text-decoration: underline;
 }
@@ -152,6 +157,15 @@ getRoles()
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.list-setting > button {
+  background-color: var(--color-button-primary, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .list-setting-row {
@@ -183,9 +197,13 @@ getRoles()
   padding: 1rem;
 }
 
+summary {
+  cursor: pointer;
+}
+
 details ul > li {
   padding: 1rem;
-  border: black 1px solid;
+  border: rgba(0, 0, 0, 0.3) 1px solid;
 }
 
 details ul > li:not(:last-child) {
