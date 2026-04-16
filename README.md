@@ -1,6 +1,9 @@
-# Nuxt Minimal Starter
+# Movie Night Web [WIP]
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
+Setup is pretty standard for a Nuxt project so I'll leave that below. Just be sure to copy .env.example to .env and fill
+in the value.
 
 ## Setup
 
