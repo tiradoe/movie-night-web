@@ -11,7 +11,7 @@
 
 <style>
 body {
-  background-color: #f5f5f5;
+  background-color: var(--color-primary);
   font-family: var(--font-body), serif;
 }
 

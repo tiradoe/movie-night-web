@@ -37,11 +37,11 @@ const emit = defineEmits<{
   right: 0;
   bottom: 0;
   width: 40%;
-  background: var(--color-surface, #fff);
+  background: var(--panel-background, #fff);
   z-index: 101;
   overflow-y: auto;
-  padding: 1rem;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  padding: 3rem;
 }
 
 .close-button {
