@@ -60,7 +60,7 @@ const handleRegistration = async () => {
 }
 
 .error-message {
-  color: red;
+  color: var(--color-error-text, red);
   text-align: center;
 }
 

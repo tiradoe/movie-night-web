@@ -79,7 +79,6 @@ dt {
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  justify-content: center;
   max-width: 40rem;
   margin: 0 auto;
 }

@@ -50,7 +50,7 @@ form {
 }
 
 .error {
-  color: red;
+  color: var(--color-error-text, red);
   padding: 2em;
 }
 </style>

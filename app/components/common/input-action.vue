@@ -5,6 +5,7 @@ defineProps<{
   placeholder: string
   buttonText: string
   inputName: string
+  inputId?: string
 }>()
 
 const emit = defineEmits(['action'])
@@ -13,7 +14,8 @@ const emit = defineEmits(['action'])
 
 <template>
   <div class="form-group">
-    <input v-model="model"
+    <input :id="inputId"
+           v-model="model"
            :name="inputName"
            :placeholder="placeholder"
            type="text">
@@ -24,8 +26,8 @@ const emit = defineEmits(['action'])
 
 <style scoped>
 button {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--color-action-button);
+  color: var(--color-action-button-text, white);
   padding: .5rem 1rem;
   border: none;
   border-radius: 0 4px 4px 0;

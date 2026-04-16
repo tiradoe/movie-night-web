@@ -1,5 +1,11 @@
 :root {
-    --color-primary: #000;
+    --color-primary: #f5f5f5;
     --color-surface: #fff;
     --font-body: 'Ubuntu', serif;
+    --result-background: #c4c1d2;
+    --panel-background: #f5f5f5;
+    --card-background: #c4c1d2;
+    --color-action-button: #4caf50;
+    --color-action-button-text: #fff;
+    --color-error-text: red;
 }

@@ -55,6 +55,10 @@ const handleLogin = async () => {
   gap: 1rem;
 }
 
+.error-message {
+  color: var(--color-error-text, red);
+}
+
 .password-form {
   display: flex;
   flex-direction: column;
