@@ -26,7 +26,7 @@ const emit = defineEmits(['action'])
 
 <style scoped>
 button {
-  background-color: var(--color-action-button);
+  background-color: var(--color-button-primary, #007bff);
   color: var(--color-action-button-text, white);
   padding: .5rem 1rem;
   border: none;

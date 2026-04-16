@@ -2,6 +2,7 @@
 import type {Movie} from "~/types/movie";
 import type {MovieCriticScore} from "~/types/movie-critic-score";
 import posterPlaceholder from "~/assets/img/poster-placeholder.svg";
+import ButtonAction from "~/components/common/button-action.vue";
 
 const props = defineProps<{
   selectedMovie: Movie;
@@ -57,7 +58,11 @@ const criticScores = computed(() => {
       </div>
     </dl>
 
-    <button v-if="canEdit" type="button" @click="emit('remove-movie', selectedMovie.id)">Remove From List</button>
+    <ButtonAction v-if="canEdit"
+                  button-text="Remove From List"
+                  buttonColor="danger"
+                  @action="emit('remove-movie', selectedMovie.id)"
+    />
   </div>
 </template>
 
