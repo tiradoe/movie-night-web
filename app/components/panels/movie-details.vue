@@ -58,10 +58,11 @@ const criticScores = computed(() => {
       </div>
     </dl>
 
-    <ButtonAction v-if="canEdit"
-                  button-text="Remove From List"
-                  buttonColor="danger"
-                  @action="emit('remove-movie', selectedMovie.id)"
+    <ButtonAction
+        v-if="canEdit"
+        button-text="Remove From List"
+        buttonColor="danger"
+        @action="emit('remove-movie', selectedMovie.id)"
     />
   </div>
 </template>
@@ -69,9 +70,6 @@ const criticScores = computed(() => {
 <style scoped>
 dt {
   font-weight: bold;
-}
-
-.critic-score-source {
 }
 
 .movie-detail {
