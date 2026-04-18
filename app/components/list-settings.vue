@@ -55,6 +55,8 @@ const deleteList = () => {
 
 const roles = ref<Role[]>([])
 
+const isOwner = computed(() => props.list.role === 'OWNER');
+
 const getRoles = () => {
   return $api<ResourceResponse<Role[]>>(`/api/roles`, {
     method: 'GET'
@@ -127,7 +129,7 @@ getRoles()
           <span v-if="responseMessage">{{ responseMessage }}</span>
         </form>
       </li>
-      <li class="list-setting">
+      <li v-if="isOwner" class="list-setting">
         <label for="delete-list-button">Delete MovieList</label>
         <ButtonAction button-color="danger" button-text="Delete" @action="deleteList"/>
       </li>
