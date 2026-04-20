@@ -2,7 +2,8 @@ export default defineNuxtRouteMiddleware((to) => {
     const publicRoutes = [
         'auth-login',
         'auth-register',
-        'auth-reset-password',
+        'auth-reset-password-token',
+        'auth-forgot-password',
         'invitations-token-accept',
         'invitations-token-decline',
     ]

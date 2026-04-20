@@ -4,14 +4,14 @@ const props = defineProps<{
   email: string
 }>();
 
-const {resetPassword} = useAuth();
+const {resetPasswordWithToken} = useAuth();
 const password = ref("");
 const passwordConfirmation = ref("");
 const tokenExpired = ref(false);
 
 const handlePasswordReset = () => {
   try {
-    resetPassword(password.value, passwordConfirmation.value, props.token, props.email);
+    resetPasswordWithToken(password.value, passwordConfirmation.value, props.token, props.email);
   } catch (error: unknown) {
     if (error instanceof Error && error.message === "TOKEN_EXPIRED")
       tokenExpired.value = true;

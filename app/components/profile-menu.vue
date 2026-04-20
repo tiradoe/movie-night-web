@@ -26,7 +26,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
 
     <ul v-if="dropdownOpen" class="dropdown">
       <li>
-        <NuxtLink to="/account" @click="dropdownOpen = false">Account</NuxtLink>
+        <NuxtLink to="/account-settings" @click="dropdownOpen = false">Account</NuxtLink>
       </li>
       <li @click="logout">Log Out</li>
     </ul>

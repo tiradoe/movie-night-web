@@ -10,11 +10,16 @@ definePageMeta({
   <div class="content">
     <h1>Log in</h1>
     <login-form/>
+    <NuxtLink class="link" to="/auth/forgot-password">Forgot Your Password?</NuxtLink>
   </div>
 
 </template>
 
 <style scoped>
+.link {
+  color: #007bff;
+}
+
 .content {
   display: flex;
   flex-direction: column;
