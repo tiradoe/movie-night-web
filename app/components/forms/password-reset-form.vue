@@ -59,6 +59,6 @@ const handlePasswordReset = async () => {
 }
 
 .success-message {
-  color: var(--color-button-primary);
+  color: var(--color-success-text);
 }
 </style>
