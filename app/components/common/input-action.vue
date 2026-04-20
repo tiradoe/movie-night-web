@@ -31,6 +31,7 @@ button {
   padding: .5rem 1rem;
   border: none;
   border-radius: 0 4px 4px 0;
+  cursor: pointer;
 }
 
 input {

@@ -179,12 +179,12 @@ select {
   display: flex;
   justify-content: space-between;
   padding-bottom: 1rem;
-  cursor: pointer;
 }
 
 .settings-header > div {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .settings-list {
