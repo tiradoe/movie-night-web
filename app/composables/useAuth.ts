@@ -37,12 +37,32 @@ export const useAuth = () => {
         await navigateTo('/auth/login')
     }
 
-    const resetPassword = async (password: string, passwordConfirmation: string, token: string, email: string) => {
+    const resetPassword = async (password: string, passwordConfirmation: string, currentPassword: string) => {
         await $fetch('/sanctum/csrf-cookie', {
             baseURL: config.public.apiBase,
             credentials: 'include',
         })
         await $api('/api/reset-password', {
+            method: 'POST',
+            body: {
+                password,
+                password_confirmation: passwordConfirmation,
+                current_password: currentPassword
+            },
+            onResponseError: ({response}) => {
+                const err = new Error(response._data?.message ?? 'Failed to reset password');
+                (err as any).errors = response._data?.errors ?? {}
+                throw err
+            }
+        })
+    }
+
+    const resetPasswordWithToken = async (password: string, passwordConfirmation: string, token: string, email: string) => {
+        await $fetch('/sanctum/csrf-cookie', {
+            baseURL: config.public.apiBase,
+            credentials: 'include',
+        })
+        await $api('/api/reset-password-token', {
             method: 'POST',
             body: {
                 password,
@@ -57,6 +77,20 @@ export const useAuth = () => {
             }
         })
         await navigateTo('/lists')
+    }
+
+    const forgotPassword = async (email: string) => {
+        await $fetch('/sanctum/csrf-cookie', {
+            baseURL: config.public.apiBase,
+            credentials: 'include',
+        })
+        await $api('/api/forgot-password', {
+            method: 'POST',
+            body: {
+                email
+            },
+        })
+        await navigateTo('/login')
     }
 
     const xsrfToken = useCookie('XSRF-TOKEN')
@@ -77,5 +111,5 @@ export const useAuth = () => {
         navigateTo('/auth/login')
     }
 
-    return {login, register, resetPassword, logout}
+    return {login, register, forgotPassword, resetPassword, resetPasswordWithToken, logout}
 }
