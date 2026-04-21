@@ -126,7 +126,7 @@ getRoles()
           <label for="invite-collaborators-input">Invite Collaborators</label>
           <textarea v-model="collaboratorInvites" name="invite-collaborators-input" type="text"></textarea>
           <button>Send Invites</button>
-          <span v-if="responseMessage">{{ responseMessage }}</span>
+          <span v-if="responseMessage" class="success-message">{{ responseMessage }}</span>
         </form>
       </li>
       <li v-if="isOwner" class="list-setting">
@@ -210,6 +210,10 @@ details ul > li {
 
 details ul > li:not(:last-child) {
   border-bottom: none;
+}
+
+.success-message {
+  color: var(--color-success-text);
 }
 
 
