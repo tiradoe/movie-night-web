@@ -75,9 +75,12 @@ const movieSearch = () => {
   filteredMovies.value = sortMovies(filtered);
 }
 
-const handleImageError = (e: Event, movieId: number) => {
-  (e.target as HTMLImageElement).src = posterPlaceholder;
-  imageErrors.value.add(movieId);
+const handleImageError = (_e: Event, movieId: number) => {
+  imageErrors.value = new Set(imageErrors.value).add(movieId);
+}
+
+const getPosterSrc = (movie: Movie) => {
+  return imageErrors.value.has(movie.id) ? posterPlaceholder : movie.poster;
 }
 
 const isSortActive = (field: SortField, direction: SortDirection): boolean => {
@@ -130,7 +133,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
         <div class="movie-poster-container">
           <NuxtImg
               :class="{ 'movie-poster-error': imageErrors.has(movie.id) }"
-              :src="movie.poster"
+              :src="getPosterSrc(movie)"
               alt=""
               class="movie-poster"
               loading="lazy"
