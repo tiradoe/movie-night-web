@@ -58,7 +58,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
   right: 0;
   top: 100%;
   margin-top: 0.5rem;
-  background: white;
+  background: var(--card-background);
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   list-style: none;
@@ -75,7 +75,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
 }
 
 .dropdown li:hover {
-  background: #f0f0f0;
+  background: var(--color-list-item-hover);
 }
 
 </style>

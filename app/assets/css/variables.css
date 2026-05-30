@@ -1,14 +1,16 @@
 :root {
-    --color-primary: #f5f5f5;
+    --color-primary: #0a439e;
     --color-surface: #fff;
     --font-body: 'Ubuntu', serif;
     --result-background: #c4c1d2;
-    --panel-background: #f5f5f5;
-    --card-background: #c4c1d2;
+    --card-background: #575757;
+    --panel-background: var(--card-background);
     --color-button-primary: #4caf50;
     --color-button-warning: #f59e0b;
     --color-button-danger: #fb3b3b;
     --color-action-button-text: #fff;
-    --color-success-text: #4caf50;
+    --color-list-item-hover: #0058bd;
+    --color-success-text: #4caf50p;
     --color-error-text: #fb3b3b;
+    --color-movie-background: #453e3e;
 }

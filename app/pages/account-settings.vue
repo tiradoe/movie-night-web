@@ -3,27 +3,32 @@
 import PageTitle from "~/components/common/page-title.vue";
 import PasswordResetForm from "~/components/forms/password-reset-form.vue";
 import ProfileForm from "~/components/forms/profile-form.vue";
+import Card from "~/components/common/card.vue";
 </script>
 
 <template>
-  <div>
+  <div class="content">
     <PageTitle title="Account Settings"/>
 
-    <div class="password-settings settings-section">
-      <h2>Reset Password</h2>
-      <PasswordResetForm/>
+    <card>
+      <div class="password-settings settings-section">
+        <h2>Reset Password</h2>
+        <PasswordResetForm/>
 
 
-    </div>
-
-    <div class="profile-settings settings-section">
-      <div class="profile-header">
-        <h2>Profile</h2>
-        <span class="public-profile-link">View Public Profile</span>
       </div>
+    </card>
 
-      <ProfileForm/>
-    </div>
+    <card>
+      <div class="profile-settings settings-section">
+        <div class="profile-header">
+          <h2>Profile</h2>
+          <span class="public-profile-link">View Public Profile</span>
+        </div>
+
+        <ProfileForm/>
+      </div>
+    </card>
   </div>
 
 </template>
