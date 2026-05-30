@@ -70,6 +70,7 @@ const criticScores = computed(() => {
 <style scoped>
 dt {
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .movie-detail {
@@ -110,6 +111,7 @@ dt {
 
 .movie-title {
   text-align: center;
+  font-size: 2rem;
 }
 
 @media (max-width: 1300px) {

@@ -83,7 +83,7 @@ const refreshLists = () => {
 }
 
 .movie-list li:hover {
-  background-color: #eee;
+  background-color: var(--color-list-item-hover);
 }
 
 .not-found-message {

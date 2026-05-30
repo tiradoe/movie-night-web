@@ -13,6 +13,7 @@
 body {
   background-color: var(--color-primary);
   font-family: var(--font-body), serif;
+  color: var(--color-surface);
 }
 
 .content {

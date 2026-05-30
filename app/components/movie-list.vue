@@ -28,6 +28,7 @@ const sortMovies = (movies: Movie[]): Movie[] => {
   if (!currentSort.value) return movies;
 
   const {field, direction} = currentSort.value;
+  console.log(movies)
   return [...movies].sort((a, b) => {
     const aVal = a[field];
     const bVal = b[field];
@@ -122,7 +123,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
           </ul>
         </div>
       </div>
-      <ButtonAction v-if="canEdit" button-text="Add Movie" @action="emit('add-movie')" />
+      <ButtonAction v-if="canEdit" button-text="Add Movie" @action="emit('add-movie')"/>
     </div>
     <div v-if="filteredMovies.length === 0" class="movie-quote">
       <span class="quote">"You complete me."</span>
@@ -220,6 +221,7 @@ const isSortActive = (field: SortField, direction: SortDirection): boolean => {
   position: relative;
   width: 100%;
   height: 100%;
+  background-color: var(--color-movie-background);
 }
 
 .movie img {
